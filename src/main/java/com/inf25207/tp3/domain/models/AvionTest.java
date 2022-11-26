@@ -10,11 +10,11 @@ public class AvionTest {
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Avion_matricule")
     private Avion avion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Test_numero")
     private Test test;
 

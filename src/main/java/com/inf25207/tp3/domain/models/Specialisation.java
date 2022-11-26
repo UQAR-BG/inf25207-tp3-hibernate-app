@@ -9,11 +9,11 @@ public class Specialisation {
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Technicien_matricule")
     private Technicien technicien;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Type_id")
     private Type type;
 

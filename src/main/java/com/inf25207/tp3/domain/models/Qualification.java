@@ -9,11 +9,11 @@ public class Qualification {
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Pilote_matricule")
     private Pilote pilote;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Type_id")
     private Type type;
 

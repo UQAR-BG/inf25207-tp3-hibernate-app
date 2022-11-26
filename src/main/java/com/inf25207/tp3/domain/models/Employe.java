@@ -26,7 +26,7 @@ public class Employe {
     @Column(columnDefinition = "DATE")
     private Date dateEngagement;
 
-    @Column(name = "Salaire", columnDefinition = "DECIMAL(6,2)")
+    @Column(name = "Salaire", columnDefinition = "DECIMAL(12,2)")
     private Double salaire;
 
     @OneToOne(mappedBy = "employe")

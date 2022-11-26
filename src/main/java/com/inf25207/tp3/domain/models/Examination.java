@@ -17,11 +17,11 @@ public class Examination {
     @Column(columnDefinition="TEXT")
     private String rapport;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Pilote_matricule")
     private Pilote pilote;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Examen_identifiant")
     private Examen examen;
 

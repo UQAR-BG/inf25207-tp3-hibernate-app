@@ -33,7 +33,7 @@ public class Adresse {
     @Column(length = 255, nullable = false)
     private String pays;
 
-    @OneToMany(mappedBy = "adresse", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "adresse", cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Collection<Employe> employes = new ArrayList<>();
 

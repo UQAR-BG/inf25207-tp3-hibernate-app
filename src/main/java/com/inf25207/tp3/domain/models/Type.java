@@ -26,7 +26,7 @@ public class Type {
     @Column(columnDefinition = "DECIMAL(10,2)")
     private Double rayonAction;
 
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "type", cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Collection<Avion> avions = new ArrayList<>();
 

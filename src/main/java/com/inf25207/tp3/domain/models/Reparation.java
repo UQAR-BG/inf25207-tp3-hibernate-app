@@ -10,15 +10,15 @@ public class Reparation {
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Avion_matricule")
     private Avion avion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "Technicien_matricule")
     private Technicien technicien;
 
-    @Column(name = "CoutTotal", columnDefinition = "DECIMAL(6,2)")
+    @Column(name = "CoutTotal", columnDefinition = "DECIMAL(12,2)")
     private Double coutTotal;
 
     @Column(columnDefinition = "DATE")
