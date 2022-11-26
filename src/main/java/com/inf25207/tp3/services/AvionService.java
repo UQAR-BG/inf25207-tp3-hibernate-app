@@ -1,7 +1,7 @@
 package com.inf25207.tp3.services;
 
 import com.inf25207.tp3.domain.models.Avion;
-import com.inf25207.tp3.repositories.interfaces.IAvionRepository;
+import com.inf25207.tp3.repositories.interfaces.IModelRepository;
 import com.inf25207.tp3.services.interfaces.IAvionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,34 +11,34 @@ import java.util.List;
 
 @Service
 public class AvionService implements IAvionService {
-    private final IAvionRepository avionRepo;
+    private final IModelRepository<Avion> avionRepo;
 
     @Autowired
-    public AvionService(IAvionRepository avionRepo) {
+    public AvionService(IModelRepository<Avion>  avionRepo) {
         this.avionRepo = avionRepo;
     }
 
     @Override
     @Transactional
     public List<Avion> getAvions() {
-        return avionRepo.getAvions();
+        return avionRepo.getAll();
     }
 
     @Override
     @Transactional
     public Boolean addAvion(Avion avion) {
-        return avionRepo.addAvion(avion);
+        return avionRepo.persist(avion);
     }
 
     @Override
     @Transactional
     public Avion getAvion(int id) {
-        return avionRepo.getAvion(id);
+        return avionRepo.get(id);
     }
 
     @Override
     @Transactional
     public void deleteAvion(int id) {
-        avionRepo.deleteAvion(id);
+        avionRepo.delete(id);
     }
 }

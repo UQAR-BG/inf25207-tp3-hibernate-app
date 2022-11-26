@@ -1,5 +1,6 @@
 package com.inf25207.tp3.domain.models;
 
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,16 +15,27 @@ public class Type {
     @GeneratedValue
     private Integer id;
 
-    @Column(length = 255, unique = true)
+    @Size(min = 1, max = 255, message = "Vous devez fournir un nom entre 1 et 255 caractères.")
+    @NotNull(message = "Le nom ne peut pas être vide.")
+    @Column(length = 255, nullable = false)
     private String nom;
 
-    @Column(length = 3)
+    @Min(value = 1, message = "La capacité ne peut pas être vide.")
+    @Max(value = 999, message = "La capacité doit faire entre 1 et 3 caractères")
+    @NotNull(message = "La capacité ne peut pas être vide.")
+    @Column(length = 3, nullable = false)
     private Integer capacite;
 
-    @Column(columnDefinition = "DECIMAL(10,2)")
+    @Positive(message = "Le poids ne peut pas être négatif.")
+    @Digits(integer = 10, fraction = 2, message = "Le poids ne peut pas dépasser 10 caractères.")
+    @NotNull(message = "Le poids ne peut pas être vide.")
+    @Column(columnDefinition = "DECIMAL(10,2)", nullable = false)
     private Double poids;
 
-    @Column(columnDefinition = "DECIMAL(10,2)")
+    @Positive(message = "Le rayon d'action ne peut pas être négatif.")
+    @Digits(integer = 10, fraction = 2, message = "Le rayon d'action ne peut pas dépasser 10 caractères.")
+    @NotNull(message = "Le rayon d'action ne peut pas être vide.")
+    @Column(columnDefinition = "DECIMAL(10,2)", nullable = false)
     private Double rayonAction;
 
     @OneToMany(mappedBy = "type", cascade = CascadeType.MERGE)

@@ -1,6 +1,8 @@
 package com.inf25207.tp3.domain.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Examen")
@@ -10,7 +12,9 @@ public class Examen {
     @Column(name = "identifiant")
     private Integer idExamen;
 
-    @Column(length = 45)
+    @Size(min = 1, max = 45, message = "Vous devez fournir une description entre 1 et 45 caractères.")
+    @NotNull(message = "La description ne peut pas être vide.")
+    @Column(length = 45, nullable = false)
     private String description;
 
     @Column(name = "Examencol", columnDefinition = "TEXT")

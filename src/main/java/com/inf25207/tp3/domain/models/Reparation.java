@@ -1,6 +1,10 @@
 package com.inf25207.tp3.domain.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+
 import java.util.Date;
 
 @Entity
@@ -18,7 +22,10 @@ public class Reparation {
     @JoinColumn(name = "Technicien_matricule")
     private Technicien technicien;
 
-    @Column(name = "CoutTotal", columnDefinition = "DECIMAL(12,2)")
+    @PositiveOrZero(message = "Le coût ne peut pas être négatif.")
+    @Digits(integer = 12, fraction = 2, message = "Le coût ne peut pas dépasser 12 caractères.")
+    @NotNull(message = "Le coût ne peut pas être vide.")
+    @Column(name = "CoutTotal", columnDefinition = "DECIMAL(12,2)", nullable = false)
     private Double coutTotal;
 
     @Column(columnDefinition = "DATE")

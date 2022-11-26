@@ -1,6 +1,8 @@
 package com.inf25207.tp3.domain.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Date;
 
 @Entity
@@ -11,10 +13,12 @@ public class Examination {
     @Column(name = "id")
     private Integer idExamination;
 
-    @Column(columnDefinition = "DATE")
+    @NotNull(message = "La date d'examination ne peut pas être vide.")
+    @Column(columnDefinition = "DATE", nullable = false)
     private Date date;
 
-    @Column(columnDefinition="TEXT")
+    @NotNull(message = "Le rapport ne peut pas être vide.")
+    @Column(columnDefinition="TEXT", nullable = false)
     private String rapport;
 
     @ManyToOne(cascade = CascadeType.MERGE)

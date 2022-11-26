@@ -18,18 +18,18 @@ class LoadDatabase {
 
     @Bean
     CommandLineRunner initDatabase(
-            ITypeRepository typeRepo,
-            IAdresseRepository adresseRepo,
-            IEmployeRepository employeRepo,
-            IAvionRepository avionRepo,
-            IPiloteRepository piloteRepo,
-            ITechnicienRepository techRepo,
-            ISpecialisationRepository specialisationRepo,
-            IReparationRepository reparationRepo,
-            IQualificationRepository qualificationRepo) {
+            IModelRepository<Type> typeRepo,
+            IModelRepository<Adresse> adresseRepository,
+            IModelRepository<Employe> employeRepo,
+            IModelRepository<Avion> avionRepo,
+            IModelRepository<Pilote> piloteRepo,
+            IModelRepository<Technicien> techRepo,
+            IModelRepository<Specialisation> specialisationRepo,
+            IModelRepository<Reparation> reparationRepo,
+            IModelRepository<Qualification> qualificationRepo) {
         Type type1 = new Type();
         type1.setRayonAction(14816.00);
-        type1.setCapacite(1500);
+        type1.setCapacite(999);
         type1.setPoids(447696.00);
         type1.setNom("Boeing 747-8 Intercontinental");
 
@@ -41,7 +41,7 @@ class LoadDatabase {
 
         Type type3 = new Type();
         type3.setRayonAction(14816.00);
-        type3.setCapacite(1750);
+        type3.setCapacite(856);
         type3.setPoids(575000.00);
         type3.setNom("Airbus A380-800");
 
@@ -120,24 +120,24 @@ class LoadDatabase {
         reparation2.setCoutTotal(2500.00);
 
         return args -> {
-            log.info("Preloading Type " + type1 + ", Success:  " + typeRepo.addType(type1));
-            log.info("Preloading Type " + type2 + ", Success:  " + typeRepo.addType(type2));
-            log.info("Preloading Type " + type3 + ", Success:  " + typeRepo.addType(type3));
-            log.info("Preloading Avion " + avion1 + ", Success:  " + avionRepo.addAvion(avion1));
-            log.info("Preloading Avion " + avion2 + ", Success:  " + avionRepo.addAvion(avion2));
-            log.info("Preloading Avion " + avion3 + ", Success:  " + avionRepo.addAvion(avion3));
-            log.info("Preloading Avion " + avion4 + ", Success:  " + avionRepo.addAvion(avion4));
-            log.info("Preloading Adresse " + adresse1 + ", Success:  " + adresseRepo.addAdresse(adresse1));
-            log.info("Preloading Adresse " + adresse2 + ", Success:  " + adresseRepo.addAdresse(adresse2));
-            log.info("Preloading Employe " + employe1 + ", Success:  " + employeRepo.addEmploye(employe1));
-            log.info("Preloading Employe " + employe2 + ", Success:  " + employeRepo.addEmploye(employe2));
-            log.info("Preloading Pilote " + pilote + ", Success:  " + piloteRepo.addPilote(pilote));
-            log.info("Preloading Technicien " + technicien + ", Success:  " + techRepo.addTechnicien(technicien));
-            log.info("Preloading Specialisation " + specialisation1 + ", Success:  " + specialisationRepo.addSpecialisation(specialisation1));
-            log.info("Preloading Specialisation " + specialisation2 + ", Success:  " + specialisationRepo.addSpecialisation(specialisation2));
-            log.info("Preloading Qualification " + qualification + ", Success:  " + qualificationRepo.addQualification(qualification));
-            log.info("Preloading Reparation " + reparation1 + ", Success:  " + reparationRepo.addReparation(reparation1));
-            log.info("Preloading Reparation " + reparation2 + ", Success:  " + reparationRepo.addReparation(reparation2));
+            log.info("Preloading Type " + type1 + ", Success:  " + typeRepo.persist(type1));
+            log.info("Preloading Type " + type2 + ", Success:  " + typeRepo.persist(type2));
+            log.info("Preloading Type " + type3 + ", Success:  " + typeRepo.persist(type3));
+            log.info("Preloading Avion " + avion1 + ", Success:  " + avionRepo.persist(avion1));
+            log.info("Preloading Avion " + avion2 + ", Success:  " + avionRepo.persist(avion2));
+            log.info("Preloading Avion " + avion3 + ", Success:  " + avionRepo.persist(avion3));
+            log.info("Preloading Avion " + avion4 + ", Success:  " + avionRepo.persist(avion4));
+            log.info("Preloading Adresse " + adresse1 + ", Success:  " + adresseRepository.persist(adresse1));
+            log.info("Preloading Adresse " + adresse2 + ", Success:  " + adresseRepository.persist(adresse2));
+            log.info("Preloading Employe " + employe1 + ", Success:  " + employeRepo.persist(employe1));
+            log.info("Preloading Employe " + employe2 + ", Success:  " + employeRepo.persist(employe2));
+            log.info("Preloading Pilote " + pilote + ", Success:  " + piloteRepo.persist(pilote));
+            log.info("Preloading Technicien " + technicien + ", Success:  " + techRepo.persist(technicien));
+            log.info("Preloading Specialisation " + specialisation1 + ", Success:  " + specialisationRepo.persist(specialisation1));
+            log.info("Preloading Specialisation " + specialisation2 + ", Success:  " + specialisationRepo.persist(specialisation2));
+            log.info("Preloading Qualification " + qualification + ", Success:  " + qualificationRepo.persist(qualification));
+            log.info("Preloading Reparation " + reparation1 + ", Success:  " + reparationRepo.persist(reparation1));
+            log.info("Preloading Reparation " + reparation2 + ", Success:  " + reparationRepo.persist(reparation2));
         };
     }
 }

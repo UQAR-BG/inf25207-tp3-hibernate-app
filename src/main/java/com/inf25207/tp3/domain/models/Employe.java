@@ -1,6 +1,8 @@
 package com.inf25207.tp3.domain.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 import java.util.Date;
 
 @Entity
@@ -10,9 +12,13 @@ public class Employe {
     @GeneratedValue
     private Integer matricule;
 
+    @Size(min = 1, max = 45, message = "Vous devez fournir un nom entre 1 et 45 caractères.")
+    @NotNull(message = "Le nom ne peut pas être vide.")
     @Column(length = 45, nullable = false)
     private String nom;
 
+    @Size(min = 1, max = 45, message = "Vous devez fournir un prénom entre 1 et 45 caractères.")
+    @NotNull(message = "Le prénom ne peut pas être vide.")
     @Column(length = 45, nullable = false)
     private String prenom;
 
@@ -20,13 +26,17 @@ public class Employe {
     @JoinColumn(name = "Adresse_id")
     private Adresse adresse;
 
+    @Size(min = 10, max = 45, message = "Le numéro de téléphone ne peut pas faire plus de 45 caractères.")
     @Column(name = "tel", length = 45)
     private String telephone;
 
     @Column(columnDefinition = "DATE")
     private Date dateEngagement;
 
-    @Column(name = "Salaire", columnDefinition = "DECIMAL(12,2)")
+    @PositiveOrZero(message = "Le salaire ne peut pas être négatif.")
+    @Digits(integer = 12, fraction = 2, message = "Le salaire ne peut pas dépasser 12 caractères.")
+    @NotNull(message = "Le salaire ne peut pas être vide.")
+    @Column(name = "Salaire", columnDefinition = "DECIMAL(12,2)", nullable = false)
     private Double salaire;
 
     @OneToOne(mappedBy = "employe")
