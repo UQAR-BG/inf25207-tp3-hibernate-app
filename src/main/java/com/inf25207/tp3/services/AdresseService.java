@@ -4,15 +4,19 @@ import com.inf25207.tp3.domain.models.Adresse;
 import com.inf25207.tp3.repositories.interfaces.IAdresseRepository;
 import com.inf25207.tp3.services.interfaces.IAdresseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
+@Service
 public class AdresseService implements IAdresseService {
+    private final IAdresseRepository adresseRepo;
+
     @Autowired
-    private IAdresseRepository adresseRepo;
+    public AdresseService(IAdresseRepository adresseRepo) {
+        this.adresseRepo = adresseRepo;
+    }
 
     @Override
     @Transactional

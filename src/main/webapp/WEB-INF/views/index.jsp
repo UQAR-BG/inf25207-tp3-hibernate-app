@@ -4,7 +4,7 @@
 <html lang="en">
     <head>
         <title>Welcome</title>
-        <link href="webjars/bootstrap/5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <div>
@@ -17,6 +17,6 @@
                 Click on this <strong><a href="next">link</a></strong> to visit another page.
             </div>
         </div>
-        <script src="webjars/bootstrap/5.2.1/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
