@@ -18,18 +18,25 @@ public class AvionRepository implements IAvionRepository {
         this.sessionfactory = sessionfactory;
     }
 
+    @Override
     public List<Avion> getAvions() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Avion", Avion.class).list();
+        Session session = sessionfactory.openSession();
+        List<Avion> Avions = session.createQuery("from Avion", Avion.class).list();
+
+        session.close();
+        return Avions;
     }
 
-    public boolean addAvion(Avion avion) {
+    @Override
+    public boolean addAvion(Avion Avion) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
-            session.persist(avion);
+            session.persist(Avion);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -37,13 +44,20 @@ public class AvionRepository implements IAvionRepository {
         return true;
     }
 
+    @Override
     public Avion getAvion(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Avion.class, id);
+        Session session = sessionfactory.openSession();
+        Avion Avion = session.get(Avion.class, id);
+
+        session.close();
+        return Avion;
     }
 
+    @Override
     public void deleteAvion(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getAvion(id));
+
+        session.close();
     }
 }

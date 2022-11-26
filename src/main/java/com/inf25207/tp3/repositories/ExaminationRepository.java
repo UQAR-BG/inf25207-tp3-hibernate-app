@@ -20,18 +20,23 @@ public class ExaminationRepository implements IExaminationRepository {
 
     @Override
     public List<Examination> getExaminations() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Examination", Examination.class).list();
+        Session session = sessionfactory.openSession();
+        List<Examination> Examinations = session.createQuery("from Examination", Examination.class).list();
+
+        session.close();
+        return Examinations;
     }
 
     @Override
     public boolean addExamination(Examination Examination) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
             session.persist(Examination);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -41,13 +46,18 @@ public class ExaminationRepository implements IExaminationRepository {
 
     @Override
     public Examination getExamination(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Examination.class, id);
+        Session session = sessionfactory.openSession();
+        Examination Examination = session.get(Examination.class, id);
+
+        session.close();
+        return Examination;
     }
 
     @Override
     public void deleteExamination(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getExamination(id));
+
+        session.close();
     }
 }

@@ -20,18 +20,23 @@ public class ReparationRepository implements IReparationRepository {
 
     @Override
     public List<Reparation> getReparations() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Reparation", Reparation.class).list();
+        Session session = sessionfactory.openSession();
+        List<Reparation> Reparations = session.createQuery("from Reparation", Reparation.class).list();
+
+        session.close();
+        return Reparations;
     }
 
     @Override
     public boolean addReparation(Reparation Reparation) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
             session.persist(Reparation);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -41,13 +46,18 @@ public class ReparationRepository implements IReparationRepository {
 
     @Override
     public Reparation getReparation(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Reparation.class, id);
+        Session session = sessionfactory.openSession();
+        Reparation Reparation = session.get(Reparation.class, id);
+
+        session.close();
+        return Reparation;
     }
 
     @Override
     public void deleteReparation(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getReparation(id));
+
+        session.close();
     }
 }

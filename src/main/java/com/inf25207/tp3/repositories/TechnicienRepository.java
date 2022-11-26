@@ -20,18 +20,23 @@ public class TechnicienRepository implements ITechnicienRepository {
 
     @Override
     public List<Technicien> getTechniciens() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Technicien", Technicien.class).list();
+        Session session = sessionfactory.openSession();
+        List<Technicien> Techniciens = session.createQuery("from Technicien", Technicien.class).list();
+
+        session.close();
+        return Techniciens;
     }
 
     @Override
     public boolean addTechnicien(Technicien Technicien) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
             session.persist(Technicien);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -41,13 +46,18 @@ public class TechnicienRepository implements ITechnicienRepository {
 
     @Override
     public Technicien getTechnicien(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Technicien.class, id);
+        Session session = sessionfactory.openSession();
+        Technicien Technicien = session.get(Technicien.class, id);
+
+        session.close();
+        return Technicien;
     }
 
     @Override
     public void deleteTechnicien(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getTechnicien(id));
+
+        session.close();
     }
 }

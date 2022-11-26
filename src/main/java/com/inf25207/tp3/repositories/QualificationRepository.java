@@ -20,18 +20,23 @@ public class QualificationRepository implements IQualificationRepository {
 
     @Override
     public List<Qualification> getQualifications() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Qualification", Qualification.class).list();
+        Session session = sessionfactory.openSession();
+        List<Qualification> Qualifications = session.createQuery("from Qualification", Qualification.class).list();
+
+        session.close();
+        return Qualifications;
     }
 
     @Override
     public boolean addQualification(Qualification Qualification) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
             session.persist(Qualification);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -41,13 +46,18 @@ public class QualificationRepository implements IQualificationRepository {
 
     @Override
     public Qualification getQualification(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Qualification.class, id);
+        Session session = sessionfactory.openSession();
+        Qualification Qualification = session.get(Qualification.class, id);
+
+        session.close();
+        return Qualification;
     }
 
     @Override
     public void deleteQualification(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getQualification(id));
+
+        session.close();
     }
 }

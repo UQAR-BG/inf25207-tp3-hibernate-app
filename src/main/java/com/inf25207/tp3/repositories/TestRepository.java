@@ -20,18 +20,23 @@ public class TestRepository implements ITestRepository {
 
     @Override
     public List<Test> getTests() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Test", Test.class).list();
+        Session session = sessionfactory.openSession();
+        List<Test> Tests = session.createQuery("from Test", Test.class).list();
+
+        session.close();
+        return Tests;
     }
 
     @Override
     public boolean addTest(Test Test) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
             session.persist(Test);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -41,13 +46,18 @@ public class TestRepository implements ITestRepository {
 
     @Override
     public Test getTest(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Test.class, id);
+        Session session = sessionfactory.openSession();
+        Test Test = session.get(Test.class, id);
+
+        session.close();
+        return Test;
     }
 
     @Override
     public void deleteTest(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getTest(id));
+
+        session.close();
     }
 }

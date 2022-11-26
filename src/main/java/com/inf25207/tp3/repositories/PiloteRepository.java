@@ -20,18 +20,23 @@ public class PiloteRepository implements IPiloteRepository {
 
     @Override
     public List<Pilote> getPilotes() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Pilote", Pilote.class).list();
+        Session session = sessionfactory.openSession();
+        List<Pilote> Pilotes = session.createQuery("from Pilote", Pilote.class).list();
+
+        session.close();
+        return Pilotes;
     }
 
     @Override
     public boolean addPilote(Pilote Pilote) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
             session.persist(Pilote);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -41,13 +46,18 @@ public class PiloteRepository implements IPiloteRepository {
 
     @Override
     public Pilote getPilote(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Pilote.class, id);
+        Session session = sessionfactory.openSession();
+        Pilote Pilote = session.get(Pilote.class, id);
+
+        session.close();
+        return Pilote;
     }
 
     @Override
     public void deletePilote(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getPilote(id));
+
+        session.close();
     }
 }

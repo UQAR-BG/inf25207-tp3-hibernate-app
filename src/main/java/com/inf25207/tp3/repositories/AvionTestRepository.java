@@ -20,18 +20,23 @@ public class AvionTestRepository implements IAvionTestRepository {
 
     @Override
     public List<AvionTest> getAvionTests() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from AvionTest", AvionTest.class).list();
+        Session session = sessionfactory.openSession();
+        List<AvionTest> AvionTests = session.createQuery("from AvionTest", AvionTest.class).list();
+
+        session.close();
+        return AvionTests;
     }
 
     @Override
-    public boolean addAvionTest(AvionTest avionTest) {
+    public boolean addAvionTest(AvionTest AvionTest) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
-            session.persist(avionTest);
+            session.persist(AvionTest);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -41,13 +46,18 @@ public class AvionTestRepository implements IAvionTestRepository {
 
     @Override
     public AvionTest getAvionTest(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(AvionTest.class, id);
+        Session session = sessionfactory.openSession();
+        AvionTest AvionTest = session.get(AvionTest.class, id);
+
+        session.close();
+        return AvionTest;
     }
 
     @Override
     public void deleteAvionTest(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getAvionTest(id));
+
+        session.close();
     }
 }

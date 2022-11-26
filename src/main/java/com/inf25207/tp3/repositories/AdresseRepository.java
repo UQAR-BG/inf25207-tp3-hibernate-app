@@ -20,18 +20,23 @@ public class AdresseRepository implements IAdresseRepository {
 
     @Override
     public List<Adresse> getAdresses() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Adresse", Adresse.class).list();
+        Session session = sessionfactory.openSession();
+        List<Adresse> Adresses = session.createQuery("from Adresse", Adresse.class).list();
+
+        session.close();
+        return Adresses;
     }
 
     @Override
-    public boolean addAdresse(Adresse adresse) {
+    public boolean addAdresse(Adresse Adresse) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
-            session.persist(adresse);
+            session.persist(Adresse);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }
@@ -41,13 +46,18 @@ public class AdresseRepository implements IAdresseRepository {
 
     @Override
     public Adresse getAdresse(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Adresse.class, id);
+        Session session = sessionfactory.openSession();
+        Adresse Adresse = session.get(Adresse.class, id);
+
+        session.close();
+        return Adresse;
     }
 
     @Override
     public void deleteAdresse(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getAdresse(id));
+
+        session.close();
     }
 }

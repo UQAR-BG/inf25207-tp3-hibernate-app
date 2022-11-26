@@ -20,8 +20,11 @@ public class TypeRepository implements ITypeRepository {
 
     @Override
     public List<Type> getTypes() {
-        Session session = sessionfactory.getCurrentSession();
-        return session.createQuery("from Type", Type.class).list();
+        Session session = sessionfactory.openSession();
+        List<Type> types = session.createQuery("from Type", Type.class).list();
+
+        session.close();
+        return types;
     }
 
     @Override
@@ -43,13 +46,18 @@ public class TypeRepository implements ITypeRepository {
 
     @Override
     public Type getType(int id) {
-        Session session = sessionfactory.getCurrentSession();
-        return session.get(Type.class, id);
+        Session session = sessionfactory.openSession();
+        Type type = session.get(Type.class, id);
+
+        session.close();
+        return type;
     }
 
     @Override
     public void deleteType(int id) {
-        Session session = sessionfactory.getCurrentSession();
+        Session session = sessionfactory.openSession();
         session.remove(getType(id));
+
+        session.close();
     }
 }
