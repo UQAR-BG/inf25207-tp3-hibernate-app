@@ -26,7 +26,7 @@ public class AvionService implements IAvionService {
 
     @Override
     @Transactional
-    public boolean addAvion(Avion avion) {
+    public Boolean addAvion(Avion avion) {
         return avionRepo.addAvion(avion);
     }
 

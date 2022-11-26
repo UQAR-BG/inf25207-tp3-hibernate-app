@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IAvionService {
     List<Avion> getAvions();
-    boolean addAvion(Avion avion);
+    Boolean addAvion(Avion avion);
     Avion getAvion(int id);
     void deleteAvion(int id);
 }

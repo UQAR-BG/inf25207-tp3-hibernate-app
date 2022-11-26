@@ -18,13 +18,11 @@ public class AvionRepository implements IAvionRepository {
         this.sessionfactory = sessionfactory;
     }
 
-    @Override
     public List<Avion> getAvions() {
         Session session = sessionfactory.getCurrentSession();
         return session.createQuery("from Avion", Avion.class).list();
     }
 
-    @Override
     public boolean addAvion(Avion avion) {
         try {
             Session session = sessionfactory.getCurrentSession();
@@ -39,13 +37,11 @@ public class AvionRepository implements IAvionRepository {
         return true;
     }
 
-    @Override
     public Avion getAvion(int id) {
         Session session = sessionfactory.getCurrentSession();
         return session.get(Avion.class, id);
     }
 
-    @Override
     public void deleteAvion(int id) {
         Session session = sessionfactory.getCurrentSession();
         session.remove(getAvion(id));

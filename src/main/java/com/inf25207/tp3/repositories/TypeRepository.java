@@ -27,11 +27,13 @@ public class TypeRepository implements ITypeRepository {
     @Override
     public boolean addType(Type Type) {
         try {
-            Session session = sessionfactory.getCurrentSession();
+            Session session = sessionfactory.openSession();
 
             session.beginTransaction();
             session.persist(Type);
             session.getTransaction().commit();
+
+            session.close();
         } catch (Exception e) {
             return false;
         }

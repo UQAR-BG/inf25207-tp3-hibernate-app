@@ -20,10 +20,10 @@ public class Type {
     @Column(length = 3)
     private Integer capacite;
 
-    @Column(columnDefinition = "DECIMAL(6,2)")
+    @Column(columnDefinition = "DECIMAL(10,2)")
     private Double poids;
 
-    @Column(columnDefinition = "DECIMAL(6,2)")
+    @Column(columnDefinition = "DECIMAL(10,2)")
     private Double rayonAction;
 
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
