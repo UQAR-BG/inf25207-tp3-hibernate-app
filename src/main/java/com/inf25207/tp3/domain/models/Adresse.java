@@ -2,10 +2,7 @@ package com.inf25207.tp3.domain.models;
 
 import com.inf25207.tp3.domain.validators.codepostal.CodePostal;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -37,7 +34,6 @@ public class Adresse {
     private String ville;
 
     @CodePostal
-    @Size(min = 6, max = 45, message = "Vous devez fournir un code postal valide.")
     @NotNull(message = "Le code postal ne peut pas être vide.")
     @Column(length = 45, nullable = false)
     private String codePostal;

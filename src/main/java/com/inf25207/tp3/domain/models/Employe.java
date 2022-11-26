@@ -3,6 +3,8 @@ package com.inf25207.tp3.domain.models;
 import com.inf25207.tp3.domain.validators.telephone.Telephone;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -25,6 +27,7 @@ public class Employe {
 
     @ManyToOne
     @JoinColumn(name = "Adresse_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Adresse adresse;
 
     @Telephone

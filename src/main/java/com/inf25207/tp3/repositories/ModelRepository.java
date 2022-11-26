@@ -26,7 +26,11 @@ public abstract class ModelRepository<T> implements IModelRepository<T> {
     @Override
     public void delete(int id) {
         Session session = sessionfactory.openSession();
+
+        session.beginTransaction();
         session.remove(get(id));
+        session.flush();
+        session.getTransaction().commit();
 
         session.close();
     }
