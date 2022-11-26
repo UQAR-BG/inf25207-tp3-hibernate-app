@@ -61,7 +61,7 @@ class LoadDatabase {
         adresse1.setNumeroRue(1275);
         adresse1.setNomRue("Rue de Fontenay");
         adresse1.setVille("Québec");
-        adresse1.setCodePostal("dscbadkwidsjhcsab");
+        adresse1.setCodePostal("G1W 3T1");
         adresse1.setProvince("Québec");
         adresse1.setPays("Canada");
 

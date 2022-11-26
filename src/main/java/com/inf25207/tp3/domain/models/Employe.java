@@ -1,5 +1,6 @@
 package com.inf25207.tp3.domain.models;
 
+import com.inf25207.tp3.domain.validators.telephone.Telephone;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -26,6 +27,7 @@ public class Employe {
     @JoinColumn(name = "Adresse_id")
     private Adresse adresse;
 
+    @Telephone
     @Size(min = 10, max = 45, message = "Le numéro de téléphone ne peut pas faire plus de 45 caractères.")
     @Column(name = "tel", length = 45)
     private String telephone;
