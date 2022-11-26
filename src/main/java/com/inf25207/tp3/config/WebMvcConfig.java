@@ -12,13 +12,13 @@ import org.springframework.web.servlet.view.JstlView;
 
 /**
  * @author Ramesh Fadatare
- * https://www.javaguides.net/2018/11/spring-5-hibernate-5-java-config-example.html
+ * Source: https://www.javaguides.net/2018/11/spring-5-hibernate-5-java-config-example.html
  */
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {
-        "com.inf25207.tp3.web.controllers"
+        "com.inf25207.tp3.controllers"
 })
 public class WebMvcConfig implements WebMvcConfigurer {
 
@@ -34,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
+            .addResourceHandler("/resources/**")
+            .addResourceLocations("/resources/");
     }
 }

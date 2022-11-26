@@ -2,16 +2,21 @@
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html lang="en">
-<body>
-    <div>
+    <head>
+        <title>Welcome</title>
+        <link href="webjars/bootstrap/5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
         <div>
-            <h1>Spring Boot JSP Example</h1>
-            <h2>Hello ${message}</h2>
+            <div>
+                <h1>Spring Boot JSP Example</h1>
+                <h2>Hello ${message}</h2>
 
-            <p>Adresses ${adresses}</p>
+                <p>Adresses ${adresses}</p>
 
-            Click on this <strong><a href="next">link</a></strong> to visit another page.
+                Click on this <strong><a href="next">link</a></strong> to visit another page.
+            </div>
         </div>
-    </div>
-</body>
+        <script src="webjars/bootstrap/5.2.1/dist/js/bootstrap.min.js"></script>
+    </body>
 </html>

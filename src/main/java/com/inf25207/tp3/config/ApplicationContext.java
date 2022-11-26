@@ -14,11 +14,20 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * @author Ramesh Fadatare
+ * Source: https://www.javaguides.net/2018/11/spring-5-hibernate-5-java-config-example.html
+ */
+
 @Configuration
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"com.inf25207.tp3.web.controllers", "com.inf25207.tp3.services", "com.inf25207.tp3.repositories"})
-public class AppContext {
+@ComponentScan(basePackages = {
+        "com.inf25207.tp3.controllers",
+        "com.inf25207.tp3.services",
+        "com.inf25207.tp3.repositories"
+})
+public class ApplicationContext {
 
     @Autowired
     private Environment environment;

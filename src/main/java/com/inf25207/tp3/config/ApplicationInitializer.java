@@ -2,12 +2,17 @@ package com.inf25207.tp3.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+/**
+ * @author Ramesh Fadatare
+ * Source: https://www.javaguides.net/2018/11/spring-5-hibernate-5-java-config-example.html
+ */
+
+public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class <?> [] getRootConfigClasses() {
         return new Class[] {
-                AppContext.class
+                ApplicationContext.class
         };
         //return null;
     }

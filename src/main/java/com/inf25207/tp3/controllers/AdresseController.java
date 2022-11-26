@@ -1,4 +1,4 @@
-package com.inf25207.tp3.web.controllers;
+package com.inf25207.tp3.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

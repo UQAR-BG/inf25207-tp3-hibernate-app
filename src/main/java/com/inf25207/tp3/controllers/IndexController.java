@@ -1,4 +1,4 @@
-package com.inf25207.tp3.web.controllers;
+package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.services.interfaces.IAdresseService;
 import org.springframework.beans.factory.annotation.Autowired;
