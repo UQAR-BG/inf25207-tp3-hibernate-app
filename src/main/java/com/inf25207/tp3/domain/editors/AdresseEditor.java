@@ -5,23 +5,11 @@ import com.inf25207.tp3.services.interfaces.IModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.beans.PropertyEditorSupport;
-
-/*
- * Auteur: Jerome Dalbert
- * Source: https://stackoverflow.com/questions/12875299/spring-mvc-formselect-tag
- */
-
-@Component
-public class AdresseEditor extends PropertyEditorSupport {
+@Component(value = "adresseEditor")
+public class AdresseEditor extends ModelPropertyEditor<Adresse> {
     @Autowired
-    private IModelService<Adresse> adresseService;
-
-    @Override
-    public void setAsText(String text) {
-        Adresse adresse = adresseService.get(Integer.parseInt(text));
-
-        this.setValue(adresse);
+    public AdresseEditor(IModelService<Adresse> adresseService) {
+        this.service = adresseService;
     }
 }
 

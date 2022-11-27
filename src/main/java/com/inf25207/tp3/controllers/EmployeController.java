@@ -1,6 +1,6 @@
 package com.inf25207.tp3.controllers;
 
-import com.inf25207.tp3.domain.editors.AdresseEditor;
+import com.inf25207.tp3.domain.editors.ModelPropertyEditor;
 import com.inf25207.tp3.domain.models.Adresse;
 import com.inf25207.tp3.domain.models.Employe;
 import com.inf25207.tp3.services.interfaces.IModelService;
@@ -21,7 +21,7 @@ import java.util.List;
 public class EmployeController {
     private final IModelService<Employe> employeService;
     private final IModelService<Adresse> adresseService;
-    private final AdresseEditor adresseEditor;
+    private final ModelPropertyEditor<Adresse> adresseEditor;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -29,7 +29,11 @@ public class EmployeController {
     }
 
     @Autowired
-    public EmployeController(IModelService<Employe> employeService, IModelService<Adresse> adresseService, AdresseEditor adresseEditor) {
+    public EmployeController(
+            IModelService<Employe> employeService,
+            IModelService<Adresse> adresseService,
+            ModelPropertyEditor<Adresse> adresseEditor
+    ) {
         this.employeService = employeService;
         this.adresseService = adresseService;
         this.adresseEditor = adresseEditor;
