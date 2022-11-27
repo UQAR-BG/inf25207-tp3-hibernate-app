@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html lang="en">
-    <jsp:include page="shared/head.jsp"/>
+    <jsp:include page="shared/_head.jsp"/>
     <body>
-        <jsp:include page="shared/navbar.jsp"/>
+        <jsp:include page="shared/_navbar.jsp"/>
         <div class="container">
             <div class="row mt-4">
                 <h2>Bienvenue sur mon application Spring Boot MVC avec Hibernate !</h2>

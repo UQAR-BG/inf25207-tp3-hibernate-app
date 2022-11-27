@@ -40,13 +40,13 @@ public class AdresseController {
     public String showNewAdresseForm(Model model) {
         Adresse adresse = new Adresse();
         model.addAttribute("adresse", adresse);
-        return "adresse/new_adresse";
+        return "adresse/addAdresse";
     }
  
     @PostMapping("/save")
     public String saveAdresse(@Valid @ModelAttribute("adresse") Adresse adresse, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
-            return "adresse/new_adresse";
+            return "adresse/addAdresse";
         }
         adresseService.addAdresse(adresse);
         return "redirect:/adresse/adresse/" + adresse.getId();
