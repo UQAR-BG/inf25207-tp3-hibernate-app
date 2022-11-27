@@ -39,4 +39,17 @@ public abstract class ModelRepository<T> implements IModelRepository<T> {
     public T getWithRelations(int id) {
         return get(id);
     }
+
+    @Override
+    public T update(T model) {
+        T updatedModel;
+        Session session = sessionfactory.openSession();
+
+        session.beginTransaction();
+        model = session.merge(model);
+        session.getTransaction().commit();
+
+        session.close();
+        return model;
+    }
 }

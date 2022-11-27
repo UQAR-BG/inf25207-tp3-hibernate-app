@@ -37,6 +37,12 @@ public abstract class ModelService<T> implements IModelService<T> {
 
     @Override
     @Transactional
+    public T update(T model) {
+        return repository.update(model);
+    }
+
+    @Override
+    @Transactional
     public void delete(int id) {
         repository.delete(id);
     }

@@ -7,5 +7,6 @@ public interface IModelService<T> {
     boolean persist(T model);
     T get(int id);
     T getWithRelations(int id);
+    T update(T model);
     void delete(int id);
 }
