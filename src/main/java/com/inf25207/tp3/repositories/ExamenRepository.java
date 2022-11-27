@@ -1,6 +1,7 @@
 package com.inf25207.tp3.repositories;
 
 import com.inf25207.tp3.domain.models.Examen;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -20,9 +21,12 @@ public class ExamenRepository extends ModelRepository<Examen> {
     @Override
     public Examen get(int id) {
         Session session = sessionfactory.openSession();
-        Examen Examen = session.get(Examen.class, id);
+        Examen examen = session.get(Examen.class, id);
+
+        // On charge les entités liées
+        Hibernate.initialize(examen.getExaminations());
 
         session.close();
-        return Examen;
+        return examen;
     }
 }

@@ -4,11 +4,17 @@ import com.inf25207.tp3.domain.utils.CurrencyUtils;
 import com.inf25207.tp3.domain.utils.DateUtils;
 import com.inf25207.tp3.domain.validators.telephone.Telephone;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -34,11 +40,12 @@ public class Employe {
     private Adresse adresse;
 
     @Telephone
-    @Size(min = 10, max = 45, message = "Le numéro de téléphone ne peut pas faire plus de 45 caractères.")
     @Column(name = "tel", length = 45)
     private String telephone;
 
-    @Column(columnDefinition = "DATE")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "La date d'embauche ne peut pas être vide.")
+    @Column(columnDefinition = "DATE", nullable = false)
     private Date dateEngagement;
 
     @PositiveOrZero(message = "Le salaire ne peut pas être négatif.")
@@ -127,11 +134,32 @@ public class Employe {
 
     @Transient
     public LocalDate getLocalDate() {
+        if (this.dateEngagement == null)
+            return null;
+
         return DateUtils.getLocalDate(this.dateEngagement);
     }
 
     @Transient
     public String getSalaireFormatted() {
         return CurrencyUtils.getCurrency(this.salaire);
+    }
+
+    @Transient
+    public Collection<Pilote> getPilotes() {
+        Collection<Pilote> pilotes = new ArrayList<>();
+        if (pilote != null)
+            pilotes.add(pilote);
+
+        return pilotes;
+    }
+
+    @Transient
+    public Collection<Technicien> getTechniciens() {
+        Collection<Technicien> techniciens = new ArrayList<>();
+        if (technicien != null)
+            techniciens.add(technicien);
+
+        return techniciens;
     }
 }
