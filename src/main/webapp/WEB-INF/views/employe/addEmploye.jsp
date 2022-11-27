@@ -4,6 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="adresses" value="${adresses}" scope="request"/>
+
 <html lang="en">
     <jsp:include page="../shared/_head.jsp"/>
     <body>
@@ -23,6 +25,14 @@
                             <form:label path="nom">Nom</form:label>
                             <form:input type="text" class="form-control" id="inputNom" path="nom" cssErrorClass="form-control is-invalid" maxlength="45"/>
                             <form:errors path="nom" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
+                        </div>
+                        <div class="form-group mt-3">
+                            <form:label path="adresse">Adresse</form:label>
+                            <form:select class="form-select" id="inputAdresse" path="adresse" cssErrorClass="form-control is-invalid">
+                                <form:option value="-1" label="Sélectionnez une adresse ..."/>
+                                <form:options items="${adresses}" itemValue="id" />
+                            </form:select>
+                            <form:errors path="adresse" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
                         </div>
                         <div class="form-group mt-3">
                             <form:label path="telephone">Numéro de téléphone</form:label>

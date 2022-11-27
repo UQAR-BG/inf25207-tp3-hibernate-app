@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 })
 @ComponentScan(basePackages = {
         "com.inf25207.tp3.controllers",
+        "com.inf25207.tp3.domain.editors",
         "com.inf25207.tp3.services",
         "com.inf25207.tp3.repositories",
         "com.inf25207.tp3",

@@ -119,6 +119,6 @@ public class Adresse {
     @Transient
     @Override
     public String toString() {
-        return this.numeroRue + " " + this.nomRue + ", " + this.ville;
+        return this.numeroRue + " " + this.nomRue + ", " + this.ville + ", " + this.province + ", " + this.pays + ", " + this.codePostal;
     }
 }

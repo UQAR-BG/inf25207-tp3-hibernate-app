@@ -1,6 +1,9 @@
 package com.inf25207.tp3.controllers;
 
+import com.inf25207.tp3.domain.editors.AdresseEditor;
+import com.inf25207.tp3.domain.models.Adresse;
 import com.inf25207.tp3.domain.models.Employe;
+import com.inf25207.tp3.services.interfaces.IAdresseService;
 import com.inf25207.tp3.services.interfaces.IEmployeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +11,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @Controller
 @RequestMapping("/employe")
 public class EmployeController {
     private final IEmployeService employeService;
+    private final IAdresseService adresseService;
+    private final AdresseEditor adresseEditor;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Adresse.class, adresseEditor);
+    }
 
     @Autowired
-    public EmployeController(IEmployeService employeService) {
+    public EmployeController(IEmployeService employeService, IAdresseService adresseService, AdresseEditor adresseEditor) {
         this.employeService = employeService;
+        this.adresseService = adresseService;
+        this.adresseEditor = adresseEditor;
     }
 
     @GetMapping("/employes")
@@ -40,12 +54,19 @@ public class EmployeController {
     public String showNewEmployeForm(Model model) {
         Employe employe = new Employe();
         model.addAttribute("employe", employe);
+
+        Collection<Adresse> adresses = adresseService.getAdresses();
+        model.addAttribute("adresses", adresses);
+
         return "employe/addEmploye";
     }
 
     @PostMapping("/save")
     public String saveEmploye(@Valid @ModelAttribute("employe") Employe employe, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
+            Collection<Adresse> adresses = adresseService.getAdresses();
+            model.addAttribute("adresses", adresses);
+
             return "employe/addEmploye";
         }
         employeService.addEmploye(employe);

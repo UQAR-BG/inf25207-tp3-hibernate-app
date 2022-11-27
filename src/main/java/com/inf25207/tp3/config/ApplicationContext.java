@@ -25,7 +25,8 @@ import java.util.Properties;
 @ComponentScan(basePackages = {
         "com.inf25207.tp3.controllers",
         "com.inf25207.tp3.services",
-        "com.inf25207.tp3.repositories"
+        "com.inf25207.tp3.repositories",
+        "com.inf25207.tp3.domain.editors"
 })
 public class ApplicationContext {
 
