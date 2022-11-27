@@ -34,4 +34,9 @@ public abstract class ModelRepository<T> implements IModelRepository<T> {
 
         session.close();
     }
+
+    @Override
+    public T getWithRelations(int id) {
+        return get(id);
+    }
 }

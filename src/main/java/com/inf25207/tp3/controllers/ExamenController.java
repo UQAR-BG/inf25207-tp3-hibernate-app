@@ -1,8 +1,8 @@
 package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.models.Examen;
-import com.inf25207.tp3.services.interfaces.IExamenService;
-import com.inf25207.tp3.services.interfaces.IExaminationService;
+import com.inf25207.tp3.domain.models.Examination;
+import com.inf25207.tp3.services.interfaces.IModelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,25 +16,25 @@ import java.util.List;
 @Controller
 @RequestMapping("/examen")
 public class ExamenController {
-    private final IExamenService examenService;
-    private final IExaminationService examinationService;
+    private final IModelService<Examen> examenService;
+    private final IModelService<Examination> examinationService;
 
     @Autowired
-    public ExamenController(IExamenService examenService, IExaminationService examinationService) {
+    public ExamenController(IModelService<Examen> examenService, IModelService<Examination> examinationService) {
         this.examenService = examenService;
         this.examinationService = examinationService;
     }
 
     @GetMapping("/examens")
     public String viewExamens(Model model) {
-        List<Examen> examens = examenService.getExamens();
+        List<Examen> examens = examenService.getAll();
         model.addAttribute("examens", examens);
         return "examen/examens";
     }
 
     @GetMapping("/examen/{id}")
     public String viewExamen(@PathVariable(value = "id") int id, Model model) {
-        Examen examen = examenService.getExamen(id);
+        Examen examen = examenService.getWithRelations(id);
         model.addAttribute("examen", examen);
         model.addAttribute("pilotes", examen.getPilotes());
         return "examen/examen";
@@ -52,13 +52,13 @@ public class ExamenController {
         if (result.hasErrors()) {
             return "examen/addExamen";
         }
-        examenService.addExamen(examen);
+        examenService.persist(examen);
         return "redirect:/examen/examen/" + examen.getIdExamen();
     }
 
     @GetMapping("/delete/{id}")
     public String deleteExamen(@PathVariable (value = "id") int id) {
-        examenService.deleteExamen(id);
+        examenService.delete(id);
         return "redirect:/examen/examens";
     }
 }

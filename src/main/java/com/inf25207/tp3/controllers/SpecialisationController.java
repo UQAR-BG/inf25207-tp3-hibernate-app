@@ -1,7 +1,7 @@
 package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.models.Specialisation;
-import com.inf25207.tp3.services.interfaces.ISpecialisationService;
+import com.inf25207.tp3.services.interfaces.IModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/specialisation")
 public class SpecialisationController {
-    private final ISpecialisationService SpecialisationService;
+    private final IModelService<Specialisation> specialisationService;
 
     @Autowired
-    public SpecialisationController(ISpecialisationService SpecialisationService) {
-        this.SpecialisationService = SpecialisationService;
+    public SpecialisationController(IModelService<Specialisation> specialisationService) {
+        this.specialisationService = specialisationService;
     }
 
     @GetMapping("/specialisations")
@@ -31,20 +31,20 @@ public class SpecialisationController {
 
     @PostMapping("/save")
     public String saveSpecialisation(@ModelAttribute("specialisation") Specialisation Specialisation) {
-        SpecialisationService.addSpecialisation(Specialisation);
+        specialisationService.persist(Specialisation);
         return "redirect:/";
     }
 
     @GetMapping("/update/{id}")
     public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
-        Specialisation Specialisation = SpecialisationService.getSpecialisation(id);
+        Specialisation Specialisation = specialisationService.getWithRelations(id);
         model.addAttribute("specialisation", Specialisation);
         return "update_specialisation";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteSpecialisation(@PathVariable (value = "id") int id) {
-        SpecialisationService.deleteSpecialisation(id);
+        specialisationService.delete(id);
         return "redirect:/";
     }
 }

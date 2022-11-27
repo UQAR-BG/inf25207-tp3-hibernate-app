@@ -1,7 +1,7 @@
 package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.models.Reparation;
-import com.inf25207.tp3.services.interfaces.IReparationService;
+import com.inf25207.tp3.services.interfaces.IModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/reparation")
 public class ReparationController {
-    private final IReparationService ReparationService;
+    private final IModelService<Reparation> reparationService;
 
     @Autowired
-    public ReparationController(IReparationService ReparationService) {
-        this.ReparationService = ReparationService;
+    public ReparationController(IModelService<Reparation> reparationService) {
+        this.reparationService = reparationService;
     }
 
     @GetMapping("/reparations")
@@ -31,20 +31,20 @@ public class ReparationController {
 
     @PostMapping("/save")
     public String saveReparation(@ModelAttribute("reparation") Reparation Reparation) {
-        ReparationService.addReparation(Reparation);
+        reparationService.persist(Reparation);
         return "redirect:/";
     }
 
     @GetMapping("/update/{id}")
     public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
-        Reparation Reparation = ReparationService.getReparation(id);
+        Reparation Reparation = reparationService.getWithRelations(id);
         model.addAttribute("reparation", Reparation);
         return "update_reparation";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteReparation(@PathVariable (value = "id") int id) {
-        ReparationService.deleteReparation(id);
+        reparationService.delete(id);
         return "redirect:/";
     }
 }

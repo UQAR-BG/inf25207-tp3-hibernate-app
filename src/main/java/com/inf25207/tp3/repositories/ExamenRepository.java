@@ -1,5 +1,6 @@
 package com.inf25207.tp3.repositories;
 
+import com.inf25207.tp3.domain.models.Employe;
 import com.inf25207.tp3.domain.models.Examen;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -20,6 +21,15 @@ public class ExamenRepository extends ModelRepository<Examen> {
 
     @Override
     public Examen get(int id) {
+        Session session = sessionfactory.openSession();
+        Examen examen = session.get(Examen.class, id);
+
+        session.close();
+        return examen;
+    }
+
+    @Override
+    public Examen getWithRelations(int id) {
         Session session = sessionfactory.openSession();
         Examen examen = session.get(Examen.class, id);
 

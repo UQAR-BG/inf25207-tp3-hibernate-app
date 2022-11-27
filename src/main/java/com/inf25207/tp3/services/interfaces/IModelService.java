@@ -1,8 +1,8 @@
-package com.inf25207.tp3.repositories.interfaces;
+package com.inf25207.tp3.services.interfaces;
 
 import java.util.List;
 
-public interface IModelRepository<T> {
+public interface IModelService<T> {
     List<T> getAll();
     boolean persist(T model);
     T get(int id);

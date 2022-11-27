@@ -23,6 +23,15 @@ public class AdresseRepository extends ModelRepository<Adresse> {
         Session session = sessionfactory.openSession();
         Adresse adresse = session.get(Adresse.class, id);
 
+        session.close();
+        return adresse;
+    }
+
+    @Override
+    public Adresse getWithRelations(int id) {
+        Session session = sessionfactory.openSession();
+        Adresse adresse = session.get(Adresse.class, id);
+
         // On charge les entités liées
         Hibernate.initialize(adresse.getEmployes());
 

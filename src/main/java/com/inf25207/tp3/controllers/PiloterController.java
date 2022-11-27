@@ -1,7 +1,7 @@
 package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.models.Piloter;
-import com.inf25207.tp3.services.interfaces.IPiloterService;
+import com.inf25207.tp3.services.interfaces.IModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/piloter")
 public class PiloterController {
-    private final IPiloterService PiloterService;
+    private final IModelService<Piloter> piloterService;
 
     @Autowired
-    public PiloterController(IPiloterService PiloterService) {
-        this.PiloterService = PiloterService;
+    public PiloterController(IModelService<Piloter> piloterService) {
+        this.piloterService = piloterService;
     }
 
     @GetMapping("/liste_piloter")
@@ -31,20 +31,20 @@ public class PiloterController {
 
     @PostMapping("/save")
     public String savePiloter(@ModelAttribute("piloter") Piloter Piloter) {
-        PiloterService.addPiloter(Piloter);
+        piloterService.persist(Piloter);
         return "redirect:/";
     }
 
     @GetMapping("/update/{id}")
     public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
-        Piloter Piloter = PiloterService.getPiloter(id);
+        Piloter Piloter = piloterService.getWithRelations(id);
         model.addAttribute("piloter", Piloter);
         return "update_piloter";
     }
 
     @GetMapping("/delete/{id}")
     public String deletePiloter(@PathVariable (value = "id") int id) {
-        PiloterService.deletePiloter(id);
+        piloterService.delete(id);
         return "redirect:/";
     }
 }

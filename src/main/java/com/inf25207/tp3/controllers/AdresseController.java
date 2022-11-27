@@ -1,7 +1,7 @@
 package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.models.Adresse;
-import com.inf25207.tp3.services.interfaces.IAdresseService;
+import com.inf25207.tp3.services.interfaces.IModelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,23 +15,23 @@ import java.util.List;
 @Controller
 @RequestMapping("/adresse")
 public class AdresseController {
-    private final IAdresseService adresseService;
+    private final IModelService<Adresse> adresseService;
 
     @Autowired
-    public AdresseController(IAdresseService adresseService) {
+    public AdresseController(IModelService<Adresse> adresseService) {
         this.adresseService = adresseService;
     }
  
     @GetMapping("/adresses")
     public String viewAdresses(Model model) {
-        List<Adresse> adresses = adresseService.getAdresses();
+        List<Adresse> adresses = adresseService.getAll();
         model.addAttribute("adresses", adresses);
         return "adresse/adresses";
     }
 
     @GetMapping("/adresse/{id}")
     public String viewAdresse(@PathVariable(value = "id") int id, Model model) {
-        Adresse adresse = adresseService.getAdresse(id);
+        Adresse adresse = adresseService.getWithRelations(id);
         model.addAttribute("adresse", adresse);
         return "adresse/adresse";
     }
@@ -48,13 +48,13 @@ public class AdresseController {
         if (result.hasErrors()) {
             return "adresse/addAdresse";
         }
-        adresseService.addAdresse(adresse);
+        adresseService.persist(adresse);
         return "redirect:/adresse/adresse/" + adresse.getId();
     }
  
     @GetMapping("/delete/{id}")
     public String deleteAdresse(@PathVariable(value = "id") int id) {
-        adresseService.deleteAdresse(id);
+        adresseService.delete(id);
         return "redirect:/adresse/adresses";
     }
 }
