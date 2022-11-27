@@ -1,6 +1,7 @@
 package com.inf25207.tp3.repositories;
 
 import com.inf25207.tp3.domain.models.Adresse;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -20,9 +21,12 @@ public class AdresseRepository extends ModelRepository<Adresse> {
     @Override
     public Adresse get(int id) {
         Session session = sessionfactory.openSession();
-        Adresse Adresse = session.get(Adresse.class, id);
+        Adresse adresse = session.get(Adresse.class, id);
+
+        // On charge les entités liées
+        Hibernate.initialize(adresse.getEmployes());
 
         session.close();
-        return Adresse;
+        return adresse;
     }
 }

@@ -1,11 +1,14 @@
 package com.inf25207.tp3.domain.models;
 
+import com.inf25207.tp3.domain.utils.CurrencyUtils;
+import com.inf25207.tp3.domain.utils.DateUtils;
 import com.inf25207.tp3.domain.validators.telephone.Telephone;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -120,5 +123,15 @@ public class Employe {
 
     public void setTechnicien(Technicien technicien) {
         this.technicien = technicien;
+    }
+
+    @Transient
+    public LocalDate getLocalDate() {
+        return DateUtils.getLocalDate(this.dateEngagement);
+    }
+
+    @Transient
+    public String getSalaireFormatted() {
+        return CurrencyUtils.getCurrency(this.salaire);
     }
 }

@@ -115,4 +115,10 @@ public class Adresse {
     public void setEmployes(Collection<Employe> employes) {
         this.employes = employes;
     }
+
+    @Transient
+    @Override
+    public String toString() {
+        return this.numeroRue + " " + this.nomRue + ", " + this.ville;
+    }
 }
