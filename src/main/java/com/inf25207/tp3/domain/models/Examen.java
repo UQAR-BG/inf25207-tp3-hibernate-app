@@ -65,7 +65,7 @@ public class Examen {
     public Collection<Pilote> getPilotes() {
         Collection<Pilote> pilotes = new ArrayList<>();
         for (Examination examination : examinations) {
-            if (examination.getPilote() != null)
+            if (examination.getPilote() != null && !pilotes.contains(examination.getPilote()))
                 pilotes.add(examination.getPilote());
         }
         return pilotes;

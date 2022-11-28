@@ -1,6 +1,7 @@
 package com.inf25207.tp3.repositories;
 
 import com.inf25207.tp3.domain.models.Type;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -11,18 +12,30 @@ public class TypeRepository extends ModelRepository<Type> {
     @Override
     public List<Type> getAll() {
         Session session = sessionfactory.openSession();
-        List<Type> Types = session.createQuery("from Type", Type.class).list();
+        List<Type> types = session.createQuery("from Type", Type.class).list();
 
         session.close();
-        return Types;
+        return types;
     }
 
     @Override
     public Type get(int id) {
         Session session = sessionfactory.openSession();
-        Type Type = session.get(Type.class, id);
+        Type type = session.get(Type.class, id);
 
         session.close();
-        return Type;
+        return type;
+    }
+
+    @Override
+    public Type getWithRelations(int id) {
+        Session session = sessionfactory.openSession();
+        Type type = session.get(Type.class, id);
+
+        Hibernate.initialize(type.getSpecialisations());
+        Hibernate.initialize(type.getQualifications());
+
+        session.close();
+        return type;
     }
 }

@@ -42,6 +42,14 @@ public class Type {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Collection<Avion> avions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "type", cascade = CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private Collection<Qualification> qualifications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "type", cascade = CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private Collection<Specialisation> specialisations = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }
@@ -88,5 +96,41 @@ public class Type {
 
     public void setAvions(Collection<Avion> avions) {
         this.avions = avions;
+    }
+
+    public Collection<Specialisation> getSpecialisations() {
+        return specialisations;
+    }
+
+    public void setSpecialisations(Collection<Specialisation> specialisations) {
+        this.specialisations = specialisations;
+    }
+
+    public Collection<Qualification> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(Collection<Qualification> qualifications) {
+        this.qualifications = qualifications;
+    }
+
+    @Transient
+    public Collection<Pilote> getPilotes() {
+        Collection<Pilote> pilotes = new ArrayList<>();
+        for (Qualification qualification : qualifications) {
+            if (qualification.getPilote() != null && !pilotes.contains(qualification.getPilote()))
+                pilotes.add(qualification.getPilote());
+        }
+        return pilotes;
+    }
+
+    @Transient
+    public Collection<Technicien> getTechniciens() {
+        Collection<Technicien> techniciens = new ArrayList<>();
+        for (Specialisation specialisation : specialisations) {
+            if (specialisation.getTechnicien() != null && !techniciens.contains(specialisation.getTechnicien()))
+                techniciens.add(specialisation.getTechnicien());
+        }
+        return techniciens;
     }
 }

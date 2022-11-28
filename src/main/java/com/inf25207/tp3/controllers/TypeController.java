@@ -2,10 +2,15 @@ package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.models.Type;
 import com.inf25207.tp3.services.interfaces.IModelService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/type")
@@ -19,32 +24,40 @@ public class TypeController {
 
     @GetMapping("/types")
     public String viewTypes(Model model) {
-        return "types";
+        List<Type> types = typeService.getAll();
+        model.addAttribute("types", types);
+        return "type/types";
+    }
+
+    @GetMapping("/type/{id}")
+    public String viewType(@PathVariable(value = "id") int id, Model model) {
+        Type type = typeService.getWithRelations(id);
+        model.addAttribute("type", type);
+        model.addAttribute("pilotes", type.getPilotes());
+        model.addAttribute("techniciens", type.getTechniciens());
+        return "type/type";
     }
 
     @GetMapping("/add")
     public String showNewTypeForm(Model model) {
-        Type Type = new Type();
-        model.addAttribute("type", Type);
-        return "new_type";
+        Type type = new Type();
+        model.addAttribute("type", type);
+
+        return "type/addType";
     }
 
     @PostMapping("/save")
-    public String saveType(@ModelAttribute("type") Type Type) {
-        typeService.persist(Type);
-        return "redirect:/";
-    }
-
-    @GetMapping("/update/{id}")
-    public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
-        Type Type = typeService.getWithRelations(id);
-        model.addAttribute("type", Type);
-        return "update_type";
+    public String saveType(@Valid @ModelAttribute("type") Type type, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            return "type/addType";
+        }
+        typeService.persist(type);
+        return "redirect:/type/type/" + type.getId();
     }
 
     @GetMapping("/delete/{id}")
     public String deleteType(@PathVariable (value = "id") int id) {
         typeService.delete(id);
-        return "redirect:/";
+        return "redirect:/type/types";
     }
 }
