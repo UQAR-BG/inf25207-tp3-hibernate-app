@@ -1,6 +1,9 @@
 package com.inf25207.tp3.domain.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "Specialisation")
@@ -9,12 +12,16 @@ public class Specialisation {
     @GeneratedValue
     private Integer id;
 
+    @NotNull(message = "Vous devez associer un technicien")
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Technicien_matricule")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "Technicien_matricule", nullable = false)
     private Technicien technicien;
 
+    @NotNull(message = "Vous devez associer un type")
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Type_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "Type_id", nullable = false)
     private Type type;
 
     public Integer getId() {

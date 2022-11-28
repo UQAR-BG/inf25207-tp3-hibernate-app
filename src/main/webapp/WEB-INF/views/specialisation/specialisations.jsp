@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="examens" value="${examens}" scope="request"/>
+<c:set var="specialisations" value="${specialisations}" scope="request"/>
 
 <html lang="en">
     <jsp:include page="../shared/_head.jsp"/>
@@ -11,19 +11,19 @@
         <jsp:include page="../shared/_navbar.jsp"/>
         <div class="container">
             <div class="row mt-4">
-                <h2>Liste des examens</h2>
+                <h2>Liste des spécialisations</h2>
             </div>
             <div class="row mt-4">
                 <c:choose>
-                    <c:when test="${examens == null || examens.isEmpty()}">
-                        <h4>Aucun examen.</h4>
+                    <c:when test="${specialisations == null || specialisations.isEmpty()}">
+                        <h4>Aucune spécialisation.</h4>
                     </c:when>
                     <c:otherwise>
                         <jsp:include page="_specialisationList.jsp"/>
                     </c:otherwise>
                 </c:choose>
-                <a href="<spring:url value="/examen/add" />">
-                    <i class="fa fa-plus"></i><span class="mx-2">Ajouter un examen</span>
+                <a href="<spring:url value="/specialisation/add" />">
+                    <i class="fa fa-plus"></i><span class="mx-2">Ajouter une spécialisation</span>
                 </a>
             </div>
         </div>

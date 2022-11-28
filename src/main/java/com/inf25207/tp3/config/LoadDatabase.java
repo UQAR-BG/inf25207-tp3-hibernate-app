@@ -1,11 +1,20 @@
 package com.inf25207.tp3.config;
 
+import com.inf25207.tp3.domain.models.*;
+import com.inf25207.tp3.repositories.interfaces.IModelRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Calendar;
+import java.util.Date;
 
 @Configuration
 class LoadDatabase {
 
-    /*private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+    private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
     CommandLineRunner initDatabase(
@@ -15,6 +24,7 @@ class LoadDatabase {
             IModelRepository<Avion> avionRepo,
             IModelRepository<Pilote> piloteRepo,
             IModelRepository<Technicien> techRepo,
+            IModelRepository<Examen> examenRepo,
             IModelRepository<Specialisation> specialisationRepo,
             IModelRepository<Reparation> reparationRepo,
             IModelRepository<Qualification> qualificationRepo) {
@@ -86,6 +96,10 @@ class LoadDatabase {
         Technicien technicien = new Technicien();
         technicien.setEmploye(employe2);
 
+        Examen examen = new Examen();
+        examen.setDescription("Un examen de la vue.");
+        examen.setExamenCol("Un examen de la vue.");
+
         Specialisation specialisation1 = new Specialisation();
         specialisation1.setTechnicien(technicien);
         specialisation1.setType(type1);
@@ -124,11 +138,12 @@ class LoadDatabase {
             log.info("Preloading Employe " + employe2 + ", Success:  " + employeRepo.persist(employe2));
             log.info("Preloading Pilote " + pilote + ", Success:  " + piloteRepo.persist(pilote));
             log.info("Preloading Technicien " + technicien + ", Success:  " + techRepo.persist(technicien));
+            log.info("Preloading Examen " + examen + ", Success:  " + examenRepo.persist(examen));
             log.info("Preloading Specialisation " + specialisation1 + ", Success:  " + specialisationRepo.persist(specialisation1));
             log.info("Preloading Specialisation " + specialisation2 + ", Success:  " + specialisationRepo.persist(specialisation2));
             log.info("Preloading Qualification " + qualification + ", Success:  " + qualificationRepo.persist(qualification));
             log.info("Preloading Reparation " + reparation1 + ", Success:  " + reparationRepo.persist(reparation1));
             log.info("Preloading Reparation " + reparation2 + ", Success:  " + reparationRepo.persist(reparation2));
         };
-    }*/
+    }
 }
