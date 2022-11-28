@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="pilotes" value="${pilotes}" scope="request"/>
+<c:set var="adresses" value="${adresses}" scope="request"/>
 
 <html lang="en">
     <jsp:include page="../shared/_head.jsp"/>
@@ -11,19 +11,19 @@
         <jsp:include page="../shared/_navbar.jsp"/>
         <div class="container">
             <div class="row mt-4">
-                <h2>Liste des pilotes</h2>
+                <h2>Liste des adresses</h2>
             </div>
             <div class="row mt-4">
                 <c:choose>
-                    <c:when test="${pilotes == null || pilotes.isEmpty()}">
-                        <h4>Aucun examen.</h4>
+                    <c:when test="${adresses == null || adresses.isEmpty()}">
+                        <h4>Aucune adresse.</h4>
                     </c:when>
                     <c:otherwise>
-                        <jsp:include page="_piloteList.jsp"/>
+                        <jsp:include page="_qualificationList.jsp"/>
                     </c:otherwise>
                 </c:choose>
-                <a href="<spring:url value="/pilote/add" />">
-                    <i class="fa fa-plus"></i><span class="mx-2">Ajouter un pilote</span>
+                <a href="<spring:url value="/adresse/add" />">
+                    <i class="fa fa-plus"></i><span class="mx-2">Ajouter une adresse</span>
                 </a>
             </div>
         </div>

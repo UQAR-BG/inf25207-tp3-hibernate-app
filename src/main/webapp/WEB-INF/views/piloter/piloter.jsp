@@ -54,25 +54,7 @@
                     </div>
                 </c:when>
             </c:choose>
-            <c:choose>
-                <c:when test="${qualifications != null && !qualifications.isEmpty()}">
-                    <div class="row mt-4">
-                        <hr/>
-                        <h4>Qualifications associées avec ce pilote:</h4>
-                        <jsp:include page="../qualification/_qualificationList.jsp"/>
-                    </div>
-                </c:when>
-            </c:choose>
-            <a href="<spring:url value="/examination/add" />">
-                <i class="fa fa-plus"></i><span class="mx-2">Ajouter une examination</span>
-            </a>
-            <a href="<spring:url value="/piloter/add" />">
-                <i class="fa fa-plus"></i><span class="mx-2">Ajouter une expérience</span>
-            </a>
-            <a href="<spring:url value="/qualification/add" />">
-                <i class="fa fa-plus"></i><span class="mx-2">Ajouter une qualification</span>
-            </a>
-            <a href="<spring:url value="/pilote/pilotes" />">
+            <a href="<spring:url value="/examen/examens" />">
                 <i class="fa fa-arrow-left"></i><span class="mx-2">Retour à la liste</span>
             </a>
         </div>

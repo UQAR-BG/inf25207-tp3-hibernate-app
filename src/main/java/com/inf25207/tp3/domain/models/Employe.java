@@ -162,4 +162,10 @@ public class Employe {
 
         return techniciens;
     }
+
+    @Transient
+    @Override
+    public String toString() {
+        return this.prenom + " " + this.nom + ", Matricule " + this.matricule;
+    }
 }

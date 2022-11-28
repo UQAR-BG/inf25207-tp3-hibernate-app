@@ -26,7 +26,7 @@
                     <th scope="row">${loop.index + 1}</th>
                     <td>${pilote.matricule}</td>
                     <td>
-                        <a href="<spring:url value="/employe/employe/${pilote.employe.matricule}" />">
+                        <a href="<spring:url value="/empoye/empoye/${pilote.employe.matricule}" />">
                                 ${pilote.employe}
                         </a>
                     </td>
