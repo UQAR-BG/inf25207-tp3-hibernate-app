@@ -3,9 +3,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="examen" value="${examen}" scope="request"/>
-<c:set var="examinations" value="${examen.examinations}" scope="request"/>
-<c:set var="pilotes" value="${pilotes}" scope="request"/>
+<c:set var="examination" value="${examination}" scope="request"/>
+<c:set var="pilote" value="${examination.pilote}" scope="request"/>
+<c:set var="examen" value="${examination.examen}" scope="request"/>
 
 <html lang="en">
     <jsp:include page="../shared/_head.jsp"/>
@@ -13,38 +13,34 @@
         <jsp:include page="../shared/_navbar.jsp"/>
         <div class="container">
             <div class="row mt-4">
-                <h2>Examen #${examen.idExamen}</h2>
+                <h2>Examen d'un pilote #${examination.idExamination}</h2>
             </div>
             <div class="row mt-4">
                 <div class="container-fluid">
                     <dl class="row mt-4">
-                        <dt class="col-sm-6 col-lg-4">Description : </dt>
-                        <dd class="col-sm-6 col-lg-8">${examen.description}</dd>
+                        <dt class="col-sm-6 col-lg-4">Pilote : </dt>
+                        <dd class="col-sm-6 col-lg-8">
+                            <a href="<spring:url value="/pilote/pilote/${pilote.matricule}" />">
+                                ${pilote}
+                            </a>
+                        </dd>
 
-                        <dt class="col-sm-6 col-lg-4">Observations : </dt>
-                        <dd class="col-sm-6 col-lg-8">${examen.examenCol}</dd>
+                        <dt class="col-sm-6 col-lg-4">Examen : </dt>
+                        <dd class="col-sm-6 col-lg-8">
+                            <a href="<spring:url value="/examen/examen/${examen.idExamen}" />">
+                                ${examen}
+                            </a>
+                        </dd>
+
+                        <dt class="col-sm-6 col-lg-4">Date : </dt>
+                        <dd class="col-sm-6 col-lg-8">${examination.getLocalDate()}</dd>
+
+                        <dt class="col-sm-6 col-lg-4">Rapport : </dt>
+                        <dd class="col-sm-6 col-lg-8">${examination.rapport}</dd>
                     </dl>
                 </div>
             </div>
-            <c:choose>
-                <c:when test="${examinations != null && !examinations.isEmpty()}">
-                    <div class="row mt-4">
-                        <hr/>
-                        <h4>Examinations associées avec cet examen:</h4>
-                        <jsp:include page="../examination/_piloteList.jsp"/>
-                    </div>
-                </c:when>
-            </c:choose>
-            <c:choose>
-                <c:when test="${pilotes != null && !pilotes.isEmpty()}">
-                    <div class="row mt-4">
-                        <hr/>
-                        <h4>Pilotes associés avec cet examen:</h4>
-                        <jsp:include page="../pilote/_piloteList.jsp"/>
-                    </div>
-                </c:when>
-            </c:choose>
-            <a href="<spring:url value="/examen/examens" />">
+            <a href="<spring:url value="/examination/examinations" />">
                 <i class="fa fa-arrow-left"></i><span class="mx-2">Retour à la liste</span>
             </a>
         </div>

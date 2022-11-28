@@ -81,4 +81,10 @@ public class Pilote {
         }
         return examens;
     }
+
+    @Transient
+    @Override
+    public String toString() {
+        return this.employe.toString();
+    }
 }

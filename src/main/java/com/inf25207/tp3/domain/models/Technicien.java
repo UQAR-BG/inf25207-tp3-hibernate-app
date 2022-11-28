@@ -59,4 +59,10 @@ public class Technicien {
     public void setReparations(Collection<Reparation> reparations) {
         this.reparations = reparations;
     }
+
+    @Transient
+    @Override
+    public String toString() {
+        return this.employe.toString();
+    }
 }

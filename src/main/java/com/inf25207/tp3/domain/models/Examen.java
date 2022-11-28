@@ -70,4 +70,10 @@ public class Examen {
         }
         return pilotes;
     }
+
+    @Transient
+    @Override
+    public String toString() {
+        return this.description;
+    }
 }

@@ -3,6 +3,8 @@ package com.inf25207.tp3.domain.models;
 import com.inf25207.tp3.domain.utils.DateUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -17,11 +19,13 @@ public class AvionTest {
 
     @NotNull(message = "Vous devez associer un avion")
     @ManyToOne(cascade = CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Avion_matricule", nullable = false)
     private Avion avion;
 
     @NotNull(message = "Vous devez associer un test")
     @ManyToOne(cascade = CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Test_numero", nullable = false)
     private Test test;
 
