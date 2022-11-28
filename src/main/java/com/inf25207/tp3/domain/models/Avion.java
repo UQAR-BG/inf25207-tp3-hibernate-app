@@ -101,4 +101,10 @@ public class Avion {
         }
         return techniciens;
     }
+
+    @Transient
+    @Override
+    public String toString() {
+        return this.type.toString() + ", #" + this.matricule;
+    }
 }

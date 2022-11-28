@@ -75,4 +75,10 @@ public class Test {
         }
         return avions;
     }
+
+    @Transient
+    @Override
+    public String toString() {
+        return this.nom;
+    }
 }

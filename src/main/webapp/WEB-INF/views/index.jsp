@@ -14,12 +14,12 @@
                 <ul class="mt-3 mx-5">
                     <li><a href="<spring:url value="/adresse/adresses" />">Consulter la page : Adresse</a></li>
                     <li><a href="<spring:url value="/avion/avions" />">Consulter la page : Avion</a></li>
-                    <li><a href="<spring:url value="/avion_test/avion_tests" />">Consulter la page : AvionTest</a></li>
+                    <li><a href="<spring:url value="/avionTest/avionTests" />">Consulter la page : AvionTest</a></li>
                     <li><a href="<spring:url value="/employe/employes" />">Consulter la page : Employé</a></li>
                     <li><a href="<spring:url value="/examen/examens" />">Consulter la page : Examen</a></li>
                     <li><a href="<spring:url value="/examination/examinations" />">Consulter la page : Examination</a></li>
                     <li><a href="<spring:url value="/pilote/pilotes" />">Consulter la page : Pilote</a></li>
-                    <li><a href="<spring:url value="/piloter/liste_piloter" />">Consulter la page : Piloter</a></li>
+                    <li><a href="<spring:url value="/piloter/listePiloter" />">Consulter la page : Piloter</a></li>
                     <li><a href="<spring:url value="/qualification/qualifications" />">Consulter la page : Qualification</a></li>
                     <li><a href="<spring:url value="/reparation/reparations" />">Consulter la page : Réparation</a></li>
                     <li><a href="<spring:url value="/specialisation/specialisations" />">Consulter la page : Spécialisation</a></li>

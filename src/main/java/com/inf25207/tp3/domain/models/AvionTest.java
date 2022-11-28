@@ -1,6 +1,11 @@
 package com.inf25207.tp3.domain.models;
 
+import com.inf25207.tp3.domain.utils.DateUtils;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -10,15 +15,19 @@ public class AvionTest {
     @GeneratedValue
     private Integer id;
 
+    @NotNull(message = "Vous devez associer un avion")
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Avion_matricule")
+    @JoinColumn(name = "Avion_matricule", nullable = false)
     private Avion avion;
 
+    @NotNull(message = "Vous devez associer un test")
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Test_numero")
+    @JoinColumn(name = "Test_numero", nullable = false)
     private Test test;
 
-    @Column(columnDefinition = "DATE")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "La date ne peut pas être vide.")
+    @Column(columnDefinition = "DATE", nullable = false)
     private Date date;
 
     public Integer getId() {
@@ -51,5 +60,13 @@ public class AvionTest {
 
     public void setTest(Test test) {
         this.test = test;
+    }
+
+    @Transient
+    public LocalDate getLocalDate() {
+        if (this.date == null)
+            return null;
+
+        return DateUtils.getLocalDate(this.date);
     }
 }
