@@ -15,7 +15,7 @@
             </div>
             <div class="row mt-4">
                 <c:choose>
-                    <c:when test="${extechniciensamens == null || techniciens.isEmpty()}">
+                    <c:when test="${techniciens == null || techniciens.isEmpty()}">
                         <h4>Aucun technicien.</h4>
                     </c:when>
                     <c:otherwise>

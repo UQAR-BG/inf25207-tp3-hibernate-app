@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group mt-3">
                             <form:label path="seuil">Seuil</form:label>
-                            <form:input type="number" class="form-control" id="inputSeuil" path="seuil" cssErrorClass="form-control is-invalid" min="0.00" max="9.99"/>
+                            <form:input type="number" class="form-control" id="inputSeuil" path="seuil" cssErrorClass="form-control is-invalid" min="0.00" max="9.99" step=".01"/>
                             <form:errors path="seuil" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
                         </div>
                         <div class="form-group mt-3">

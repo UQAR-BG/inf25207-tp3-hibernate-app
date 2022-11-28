@@ -101,13 +101,13 @@ class LoadDatabase {
         Reparation reparation1 = new Reparation();
         reparation1.setTechnicien(technicien);
         reparation1.setAvion(avion4);
-        reparation1.setDate(new Date(2022, Calendar.DECEMBER, 1));
+        reparation1.setDate(new Date(122, Calendar.DECEMBER, 1));
         reparation1.setCoutTotal(10000.00);
 
         Reparation reparation2 = new Reparation();
         reparation2.setTechnicien(technicien);
         reparation2.setAvion(avion2);
-        reparation2.setDate(new Date(2022, Calendar.NOVEMBER, 27));
+        reparation2.setDate(new Date(122, Calendar.NOVEMBER, 27));
         reparation2.setCoutTotal(2500.00);
 
         return args -> {

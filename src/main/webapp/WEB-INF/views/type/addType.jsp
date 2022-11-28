@@ -28,12 +28,12 @@
                 </div>
                 <div class="form-group mt-3">
                     <form:label path="poids">Poids</form:label>
-                    <form:input type="number" class="form-control" id="inputPoids" path="poids" cssErrorClass="form-control is-invalid" min="0.00" max="99999999.99"/>
+                    <form:input type="number" class="form-control" id="inputPoids" path="poids" cssErrorClass="form-control is-invalid" min="0.00" max="99999999.99" step=".01"/>
                     <form:errors path="poids" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
                 </div>
                 <div class="form-group mt-3">
                     <form:label path="rayonAction">Rayon d'action</form:label>
-                    <form:input type="number" class="form-control" id="inputRayonAction" path="rayonAction" cssErrorClass="form-control is-invalid" min="0.00" max="99999999.99"/>
+                    <form:input type="number" class="form-control" id="inputRayonAction" path="rayonAction" cssErrorClass="form-control is-invalid" min="0.00" max="99999999.99" step=".01"/>
                     <form:errors path="rayonAction" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
                 </div>
                 <div class="form-group mt-3">
