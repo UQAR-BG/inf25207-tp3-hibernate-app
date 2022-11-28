@@ -133,4 +133,10 @@ public class Type {
         }
         return techniciens;
     }
+
+    @Transient
+    @Override
+    public String toString() {
+        return this.nom;
+    }
 }

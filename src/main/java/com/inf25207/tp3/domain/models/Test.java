@@ -5,6 +5,11 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Table(name = "Test")
@@ -24,6 +29,10 @@ public class Test {
     @NotNull(message = "La note seuil ne peut pas être vide.")
     @Column(name = "seuil", columnDefinition = "DECIMAL(3,2)", nullable = false)
     private Double seuil;
+
+    @OneToMany(mappedBy = "test", cascade = CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private Collection<AvionTest> avionTests = new ArrayList<>();
 
     public Integer getNumero() {
         return numero;
@@ -47,5 +56,23 @@ public class Test {
 
     public void setSeuil(Double seuil) {
         this.seuil = seuil;
+    }
+
+    public Collection<AvionTest> getAvionTests() {
+        return avionTests;
+    }
+
+    public void setAvionTests(Collection<AvionTest> avionTests) {
+        this.avionTests = avionTests;
+    }
+
+    @Transient
+    public Collection<Avion> getAvions() {
+        Collection<Avion> avions = new ArrayList<>();
+        for (AvionTest avionTest : avionTests) {
+            if (avionTest.getAvion() != null && !avions.contains(avionTest.getAvion()))
+                avions.add(avionTest.getAvion());
+        }
+        return avions;
     }
 }

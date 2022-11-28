@@ -1,6 +1,7 @@
 package com.inf25207.tp3.repositories;
 
 import com.inf25207.tp3.domain.models.Avion;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +25,18 @@ public class AvionRepository extends ModelRepository<Avion> {
 
         session.close();
         return Avion;
+    }
+
+    @Override
+    public Avion getWithRelations(int id) {
+        Session session = sessionfactory.openSession();
+        Avion avion = session.get(Avion.class, id);
+
+        Hibernate.initialize(avion.getAvionTests());
+        Hibernate.initialize(avion.getReparations());
+        Hibernate.initialize(avion.getExperiences());
+
+        session.close();
+        return avion;
     }
 }

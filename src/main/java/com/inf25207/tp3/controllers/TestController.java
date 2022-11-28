@@ -2,10 +2,15 @@ package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.models.Test;
 import com.inf25207.tp3.services.interfaces.IModelService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/test")
@@ -19,32 +24,38 @@ public class TestController {
 
     @GetMapping("/tests")
     public String viewTests(Model model) {
-        return "tests";
+        List<Test> tests = testService.getAll();
+        model.addAttribute("tests", tests);
+        return "test/tests";
+    }
+
+    @GetMapping("/test/{id}")
+    public String viewTest(@PathVariable(value = "id") int id, Model model) {
+        Test test = testService.getWithRelations(id);
+        model.addAttribute("test", test);
+        model.addAttribute("avionTests", test.getAvionTests());
+        return "test/test";
     }
 
     @GetMapping("/add")
     public String showNewTestForm(Model model) {
-        Test Test = new Test();
-        model.addAttribute("test", Test);
-        return "new_test";
+        Test test = new Test();
+        model.addAttribute("test", test);
+        return "test/addTest";
     }
 
     @PostMapping("/save")
-    public String saveTest(@ModelAttribute("test") Test Test) {
-        testService.persist(Test);
-        return "redirect:/";
-    }
-
-    @GetMapping("/update/{id}")
-    public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
-        Test Test = testService.getWithRelations(id);
-        model.addAttribute("test", Test);
-        return "update_test";
+    public String saveTest(@Valid @ModelAttribute("test") Test test, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            return "test/addTest";
+        }
+        testService.persist(test);
+        return "redirect:/test/test/" + test.getNumero();
     }
 
     @GetMapping("/delete/{id}")
     public String deleteTest(@PathVariable (value = "id") int id) {
         testService.delete(id);
-        return "redirect:/";
+        return "redirect:/test/tests";
     }
 }
