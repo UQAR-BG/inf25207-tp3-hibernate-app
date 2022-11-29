@@ -88,6 +88,35 @@ public class ExaminationController {
         return "redirect:/examination/examination/" + examination.getIdExamination();
     }
 
+    @GetMapping("/update/{id}")
+    public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
+        Examination examination = examinationService.getWithRelations(id);
+        model.addAttribute("examination", examination);
+        model.addAttribute("isUpdating", true);
+
+        Collection<Pilote> pilotes = piloteService.getAll();
+        model.addAttribute("pilotes", pilotes);
+
+        Collection<Examen> examens = examenService.getAll();
+        model.addAttribute("examens", examens);
+
+        return "examination/examination";
+    }
+
+    @PostMapping("/save/{id}")
+    public String updateExamination(@PathVariable( value = "id") int id, @Valid @ModelAttribute("examination") Examination examination, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("isUpdating", true);
+            return "examination/examination";
+        }
+
+        examination.setIdExamination(id);
+        examination = examinationService.update(examination);
+
+        model.addAttribute("isUpdating", false);
+        return "redirect:/examination/examination/" + examination.getIdExamination();
+    }
+
     @GetMapping("/delete/{id}")
     public String deleteExamination(@PathVariable (value = "id") int id) {
         examinationService.delete(id);
