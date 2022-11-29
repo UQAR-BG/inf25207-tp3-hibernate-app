@@ -52,7 +52,7 @@ public class PiloteController {
         model.addAttribute("pilote", pilote);
         model.addAttribute("examinations", pilote.getExaminations());
         model.addAttribute("qualifications", pilote.getQualifications());
-        model.addAttribute("experiences", pilote.getExperiences());
+        model.addAttribute("listePiloter", pilote.getExperiences());
         return "pilote/pilote";
     }
 
@@ -73,6 +73,35 @@ public class PiloteController {
             return "pilote/addPilote";
         }
         piloteService.persist(pilote);
+        return "redirect:/pilote/pilote/" + pilote.getMatricule();
+    }
+
+    @GetMapping("/update/{id}")
+    public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
+        Pilote pilote = piloteService.getWithRelations(id);
+        model.addAttribute("pilote", pilote);
+        model.addAttribute("examinations", pilote.getExaminations());
+        model.addAttribute("qualifications", pilote.getQualifications());
+        model.addAttribute("listePiloter", pilote.getExperiences());
+        model.addAttribute("isUpdating", true);
+
+        Collection<Employe> employes = employeService.getAll();
+        model.addAttribute("employes", employes);
+
+        return "pilote/pilote";
+    }
+
+    @PostMapping("/save/{id}")
+    public String updatePilote(@PathVariable( value = "id") int id, @Valid @ModelAttribute("pilote") Pilote pilote, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("isUpdating", true);
+            return "employe/employe";
+        }
+
+        pilote.setMatricule(id);
+        pilote = piloteService.update(pilote);
+
+        model.addAttribute("isUpdating", false);
         return "redirect:/pilote/pilote/" + pilote.getMatricule();
     }
 

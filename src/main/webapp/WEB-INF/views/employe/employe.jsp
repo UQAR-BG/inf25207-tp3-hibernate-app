@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -16,7 +16,7 @@
         <jsp:include page="../shared/_navbar.jsp"/>
         <div class="container">
             <div class="row mt-4">
-                <h2>Employé #${employe.matricule}</h2>
+                <h2>EmployÃ© #${employe.matricule}</h2>
             </div>
             <div class="row mt-4">
                 <div class="container-fluid">
@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-11">
                                 <dl class="row">
-                                    <dt class="col-sm-6 col-lg-4">Prénom : </dt>
+                                    <dt class="col-sm-6 col-lg-4">PrÃ©nom : </dt>
                                     <dd class="col-sm-6 col-lg-8">
                                         <c:choose>
                                             <c:when test="${isUpdating}">
@@ -55,7 +55,7 @@
                                         <c:choose>
                                             <c:when test="${isUpdating}">
                                                 <form:select class="form-select" id="inputAdresse" path="adresse" cssErrorClass="form-control is-invalid">
-                                                    <form:option value="-1" label="Sélectionnez une adresse ..."/>
+                                                    <form:option value="-1" label="SÃ©lectionnez une adresse ..."/>
                                                     <form:options items="${adresses}" itemValue="id" />
                                                 </form:select>
                                                 <form:errors path="adresse" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
@@ -68,7 +68,7 @@
                                         </c:choose>
                                     </dd>
 
-                                    <dt class="col-sm-6 col-lg-4">Numéro de téléphone : </dt>
+                                    <dt class="col-sm-6 col-lg-4">NumÃ©ro de tÃ©lÃ©phone : </dt>
                                     <dd class="col-sm-6 col-lg-8">
                                         <c:choose>
                                             <c:when test="${isUpdating}">
@@ -139,7 +139,7 @@
                 <c:when test="${techniciens != null && !techniciens.isEmpty()}">
                     <div class="row mt-4">
                         <hr/>
-                        <h4>Technicien associé avec cet employé:</h4>
+                        <h4>Technicien associÃ© avec cet employÃ©:</h4>
                         <jsp:include page="../technicien/_technicienList.jsp"/>
                     </div>
                 </c:when>
@@ -148,13 +148,13 @@
                 <c:when test="${pilotes != null && !pilotes.isEmpty()}">
                     <div class="row mt-4">
                         <hr/>
-                        <h4>Pilote associé avec cet employé:</h4>
+                        <h4>Pilote associÃ© avec cet employÃ©:</h4>
                         <jsp:include page="../pilote/_piloteList.jsp"/>
                     </div>
                 </c:when>
             </c:choose>
             <a href="<spring:url value="/employe/employes" />">
-                <i class="fa fa-arrow-left"></i><span class="mx-2">Retour à la liste</span>
+                <i class="fa fa-arrow-left"></i><span class="mx-2">Retour Ã  la liste</span>
             </a>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
