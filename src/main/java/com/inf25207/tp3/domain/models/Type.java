@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Type")
+@Table(
+    name = "Type",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "nom")
+    })
 public class Type {
     @Id
     @GeneratedValue
@@ -17,7 +21,7 @@ public class Type {
 
     @Size(min = 1, max = 255, message = "Vous devez fournir un nom entre 1 et 255 caractères.")
     @NotNull(message = "Le nom ne peut pas être vide.")
-    @Column(length = 255, nullable = false)
+    @Column(length = 255, nullable = false, unique = true)
     private String nom;
 
     @Min(value = 1, message = "La capacité ne peut pas être vide.")

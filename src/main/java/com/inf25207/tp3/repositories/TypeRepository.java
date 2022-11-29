@@ -3,6 +3,7 @@ package com.inf25207.tp3.repositories;
 import com.inf25207.tp3.domain.models.Type;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,6 +26,20 @@ public class TypeRepository extends ModelRepository<Type> {
 
         session.close();
         return type;
+    }
+
+    @Override
+    public boolean persist(Type model) {
+        Session session = sessionfactory.openSession();
+        Query<Type> query = session.createQuery("from Type t where t.nom=:nom", Type.class);
+        query.setParameter("nom", model.getNom());
+
+        Type type = query.uniqueResult();
+        if (type == null)
+            return super.persist(model);
+        else {
+            return false;
+        }
     }
 
     @Override

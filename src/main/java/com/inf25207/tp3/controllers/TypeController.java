@@ -48,11 +48,15 @@ public class TypeController {
 
     @PostMapping("/save")
     public String saveType(@Valid @ModelAttribute("type") Type type, BindingResult result, ModelMap model) {
-        if (result.hasErrors()) {
-            return "type/addType";
+        if (!result.hasErrors()) {
+            if (typeService.persist(type)) {
+                return "redirect:/type/type/" + type.getId();
+            }
+
+            result.rejectValue("nom", "error.nom", "Un autre type possède déjà ce nom.");
         }
-        typeService.persist(type);
-        return "redirect:/type/type/" + type.getId();
+
+        return "type/addType";
     }
 
     @GetMapping("/delete/{id}")
