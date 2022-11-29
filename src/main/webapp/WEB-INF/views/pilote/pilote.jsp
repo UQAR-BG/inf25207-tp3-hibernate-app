@@ -26,32 +26,30 @@
                         <div class="row">
                             <div class="col-11">
                                 <dl class="row">
-                                    <dl class="row mt-4">
-                                        <dt class="col-sm-6 col-lg-4">Employé : </dt>
-                                        <dd class="col-sm-6 col-lg-8">
-                                            <c:choose>
-                                                <c:when test="${isUpdating}">
-                                                    <form:select class="form-select" id="inputEmploye" path="employe" cssErrorClass="form-control is-invalid">
-                                                        <form:option value="-1" label="Sélectionnez un employé ..."/>
-                                                        <form:options items="${employes}" itemValue="matricule" />
-                                                    </form:select>
-                                                    <form:errors path="employe" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <a href="<spring:url value="/employe/employe/${employe.matricule}" />">
-                                                            ${employe}
-                                                    </a>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </dd>
+                                    <dt class="col-sm-6 col-lg-4">Employé : </dt>
+                                    <dd class="col-sm-6 col-lg-8">
+                                        <c:choose>
+                                            <c:when test="${isUpdating}">
+                                                <form:select class="form-select" id="inputEmploye" path="employe" cssErrorClass="form-control is-invalid">
+                                                    <form:option value="-1" label="Sélectionnez un employé ..."/>
+                                                    <form:options items="${employes}" itemValue="matricule" />
+                                                </form:select>
+                                                <form:errors path="employe" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="<spring:url value="/employe/employe/${employe.matricule}" />">
+                                                        ${employe}
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </dd>
 
-                                        <dt class="col-sm-6 col-lg-4">Adresse : </dt>
-                                        <dd class="col-sm-6 col-lg-8">
-                                            <a href="<spring:url value="/adresse/adresse/${employe.adresse.id}" />">
-                                                    ${employe.adresse}
-                                            </a>
-                                        </dd>
-                                    </dl>
+                                    <dt class="col-sm-6 col-lg-4">Adresse : </dt>
+                                    <dd class="col-sm-6 col-lg-8">
+                                        <a href="<spring:url value="/adresse/adresse/${employe.adresse.id}" />">
+                                                ${employe.adresse}
+                                        </a>
+                                    </dd>
                                 </dl>
                             </div>
                             <div class="col-1">

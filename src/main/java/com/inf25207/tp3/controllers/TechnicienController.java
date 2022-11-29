@@ -75,6 +75,34 @@ public class TechnicienController {
         return "redirect:/technicien/technicien/" + technicien.getMatricule();
     }
 
+    @GetMapping("/update/{id}")
+    public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
+        Technicien technicien = technicienService.getWithRelations(id);
+        model.addAttribute("technicien", technicien);
+        model.addAttribute("reparations", technicien.getReparations());
+        model.addAttribute("specialisations", technicien.getSpecialisations());
+        model.addAttribute("isUpdating", true);
+
+        Collection<Employe> employes = employeService.getAll();
+        model.addAttribute("employes", employes);
+
+        return "technicien/technicien";
+    }
+
+    @PostMapping("/save/{id}")
+    public String updateTechnicien(@PathVariable( value = "id") int id, @Valid @ModelAttribute("technicien") Technicien technicien, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("isUpdating", true);
+            return "technicien/technicien";
+        }
+
+        technicien.setMatricule(id);
+        technicien = technicienService.update(technicien);
+
+        model.addAttribute("isUpdating", false);
+        return "redirect:/technicien/technicien/" + technicien.getMatricule();
+    }
+
     @GetMapping("/delete/{id}")
     public String deleteTechnicien(@PathVariable (value = "id") int id) {
         technicienService.delete(id);

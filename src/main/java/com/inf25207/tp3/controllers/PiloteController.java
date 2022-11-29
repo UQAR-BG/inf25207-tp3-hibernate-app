@@ -95,7 +95,7 @@ public class PiloteController {
     public String updatePilote(@PathVariable( value = "id") int id, @Valid @ModelAttribute("pilote") Pilote pilote, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             model.addAttribute("isUpdating", true);
-            return "employe/employe";
+            return "pilote/pilote";
         }
 
         pilote.setMatricule(id);
