@@ -1,10 +1,9 @@
 package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.editors.interfaces.IModelPropertyEditor;
-import com.inf25207.tp3.domain.models.Pilote;
-import com.inf25207.tp3.domain.models.Qualification;
-import com.inf25207.tp3.domain.models.Type;
+import com.inf25207.tp3.domain.models.*;
 import com.inf25207.tp3.services.interfaces.IModelService;
+import com.inf25207.tp3.services.interfaces.IUniqueRelationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,9 +53,10 @@ public class QualificationController {
         return "qualification/qualifications";
     }
 
-    @GetMapping("/qualification/{id}")
-    public String viewQualification(@PathVariable(value = "id") int id, Model model) {
-        Qualification qualification = qualificationService.getWithRelations(id);
+    @GetMapping("/qualification")
+    public String viewQualification(@RequestParam(value = "type_id") int typeId, @RequestParam(value = "pilote_matricule") int piloteMatricule, Model model) {
+        Qualification qualification = ((IUniqueRelationService<Qualification>)qualificationService).get(piloteMatricule, typeId);
+
         model.addAttribute("qualification", qualification);
         return "qualification/qualification";
     }
@@ -77,23 +77,26 @@ public class QualificationController {
 
     @PostMapping("/save")
     public String saveQualification(@Valid @ModelAttribute("qualification") Qualification qualification, BindingResult result, ModelMap model) {
-        if (result.hasErrors()) {
-            Collection<Type> types = typeService.getAll();
-            model.addAttribute("types", types);
+        if (!result.hasErrors()) {
+            if (qualificationService.persist(qualification)) {
+                return "redirect:/qualification/qualification?type_id=" + qualification.getType().getId() + "&pilote_matricule=" + qualification.getPilote().getMatricule();
+            }
 
-            Collection<Pilote> pilotes = piloteService.getAll();
-            model.addAttribute("pilotes", pilotes);
-
-            return "qualification/addQualification";
+            result.rejectValue("type", "error.type", "Cette relation existe déjà.");
         }
 
-        qualificationService.persist(qualification);
-        return "redirect:/qualification/qualification/" + qualification.getId();
+        Collection<Type> types = typeService.getAll();
+        model.addAttribute("types", types);
+
+        Collection<Pilote> pilotes = piloteService.getAll();
+        model.addAttribute("pilotes", pilotes);
+
+        return "qualification/addQualification";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteQualification(@PathVariable (value = "id") int id) {
-        qualificationService.delete(id);
+    @GetMapping("/delete")
+    public String deleteQualification(@RequestParam(value = "type_id") int typeId, @RequestParam(value = "pilote_matricule") int piloteMatricule) {
+        ((IUniqueRelationService<Qualification>)qualificationService).delete(piloteMatricule, typeId);
         return "redirect:/qualification/qualifications";
     }
 }

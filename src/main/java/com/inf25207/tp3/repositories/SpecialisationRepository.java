@@ -1,21 +1,15 @@
 package com.inf25207.tp3.repositories;
 
 import com.inf25207.tp3.domain.models.Specialisation;
-import com.inf25207.tp3.domain.models.Technicien;
-import com.inf25207.tp3.repositories.interfaces.IModelRepository;
 import com.inf25207.tp3.repositories.interfaces.IUniqueRelationRepository;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 
 @Repository(value = "specialisationRepo")
 public class SpecialisationRepository extends ModelRepository<Specialisation> implements IUniqueRelationRepository<Specialisation> {
-    @Autowired
-    private IModelRepository<Technicien> technicienRepo;
-
     @Override
     public List<Specialisation> getAll() {
         Session session = sessionfactory.openSession();
@@ -27,32 +21,40 @@ public class SpecialisationRepository extends ModelRepository<Specialisation> im
 
     @Override
     public Specialisation get(int id) {
-        Session session = sessionfactory.openSession();
-        Specialisation Specialisation = session.get(Specialisation.class, id);
-
-        session.close();
-        return Specialisation;
+        return new Specialisation();
     }
 
     @Override
     public boolean persist(Specialisation model) {
-        Specialisation specialisationExistante = this.relationAlreadyExists(model);
-        if (specialisationExistante == null)
+        Specialisation specialisation = get(model.getTechnicien().getMatricule(), model.getType().getId());
+        if (specialisation == null)
             return super.persist(model);
-
-        model.setId(specialisationExistante.getId());
-        return true;
+        else {
+            return false;
+        }
     }
 
     @Override
-    public Specialisation relationAlreadyExists(Specialisation specialisation) {
-        int techId = specialisation.getTechnicien().getMatricule();
-        Technicien tech = technicienRepo.getWithRelations(techId);
+    public Specialisation get(int leftId, int rightId) {
+        Session session = sessionfactory.openSession();
+        Query<Specialisation> query = session.createQuery("from Specialisation s where s.technicien.matricule=:matricule and s.type.id=:id", Specialisation.class);
+        query.setParameter("matricule", leftId);
+        query.setParameter("id", rightId);
+        Specialisation specialisation = query.uniqueResult();
 
-        return tech.getSpecialisations()
-                .stream()
-                .filter(s -> Objects.equals(s.getType().getId(), specialisation.getType().getId()))
-                .findFirst()
-                .orElse(null);
+        session.close();
+        return specialisation;
+    }
+
+    @Override
+    public void delete(int leftId, int rightId) {
+        Session session = sessionfactory.openSession();
+
+        session.beginTransaction();
+        session.remove(get(leftId, rightId));
+        session.flush();
+        session.getTransaction().commit();
+
+        session.close();
     }
 }

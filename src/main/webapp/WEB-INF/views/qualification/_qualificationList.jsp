@@ -35,12 +35,12 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-outline-primary" href="<spring:url value="/qualification/qualification/${qualification.id}" />">
+                        <a class="btn btn-outline-primary" href="<spring:url value="/qualification/qualification?type_id=${qualification.type.id}&pilote_matricule=${qualification.pilote.matricule}" />">
                             <i class="fa fa-book-reader"></i>
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-outline-danger" href="<spring:url value="/qualification/delete/${qualification.id}" />">
+                        <a class="btn btn-outline-danger" href="<spring:url value="/qualification/delete?type_id=${qualification.type.id}&pilote_matricule=${qualification.pilote.matricule}" />">
                             <i class="fa fa-trash-can"></i>
                         </a>
                     </td>

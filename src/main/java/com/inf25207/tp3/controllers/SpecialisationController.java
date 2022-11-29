@@ -5,6 +5,7 @@ import com.inf25207.tp3.domain.models.Specialisation;
 import com.inf25207.tp3.domain.models.Technicien;
 import com.inf25207.tp3.domain.models.Type;
 import com.inf25207.tp3.services.interfaces.IModelService;
+import com.inf25207.tp3.services.interfaces.IUniqueRelationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,9 +55,10 @@ public class SpecialisationController {
         return "specialisation/specialisations";
     }
 
-    @GetMapping("/specialisation/{id}")
-    public String viewSpecialisation(@PathVariable(value = "id") int id, Model model) {
-        Specialisation specialisation = specialisationService.getWithRelations(id);
+    @GetMapping("/specialisation")
+    public String viewSpecialisation(@RequestParam(value = "type_id") int typeId, @RequestParam(value = "technicien_matricule") int techMatricule, Model model) {
+        Specialisation specialisation = ((IUniqueRelationService<Specialisation>)specialisationService).get(techMatricule, typeId);
+
         model.addAttribute("specialisation", specialisation);
         return "specialisation/specialisation";
     }
@@ -77,22 +79,26 @@ public class SpecialisationController {
 
     @PostMapping("/save")
     public String saveSpecialisation(@Valid @ModelAttribute("specialisation") Specialisation specialisation, BindingResult result, ModelMap model) {
-        if (result.hasErrors()) {
-            Collection<Type> types = typeService.getAll();
-            model.addAttribute("types", types);
+        if (!result.hasErrors()) {
+            if (specialisationService.persist(specialisation)) {
+                return "redirect:/specialisation/specialisation?type_id=" + specialisation.getType().getId() + "&technicien_matricule=" + specialisation.getTechnicien().getMatricule();
+            }
 
-            Collection<Technicien> techniciens = technicienService.getAll();
-            model.addAttribute("techniciens", techniciens);
-
-            return "specialisation/addSpecialisation";
+            result.rejectValue("type", "error.type", "Cette relation existe déjà.");
         }
-        specialisationService.persist(specialisation);
-        return "redirect:/specialisation/specialisation/" + specialisation.getId();
+
+        Collection<Type> types = typeService.getAll();
+        model.addAttribute("types", types);
+
+        Collection<Technicien> techniciens = technicienService.getAll();
+        model.addAttribute("techniciens", techniciens);
+
+        return "specialisation/addSpecialisation";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteSpecialisation(@PathVariable (value = "id") int id) {
-        specialisationService.delete(id);
+    @GetMapping("/delete")
+    public String deleteSpecialisation(@RequestParam(value = "type_id") int typeId, @RequestParam(value = "technicien_matricule") int techMatricule) {
+        ((IUniqueRelationService<Specialisation>)specialisationService).delete(techMatricule, typeId);
         return "redirect:/specialisation/specialisations";
     }
 }

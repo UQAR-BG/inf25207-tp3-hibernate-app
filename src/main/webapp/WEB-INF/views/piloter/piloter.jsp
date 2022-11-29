@@ -13,7 +13,7 @@
         <jsp:include page="../shared/_navbar.jsp"/>
         <div class="container">
             <div class="row mt-4">
-                <h2>Expérience de vol #${piloter.id}</h2>
+                <h2>Expérience de vol</h2>
             </div>
             <div class="row mt-4">
                 <div class="container-fluid">

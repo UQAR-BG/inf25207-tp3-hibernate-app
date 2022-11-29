@@ -35,12 +35,12 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-outline-primary" href="<spring:url value="/piloter/piloter/${piloter.id}" />">
+                        <a class="btn btn-outline-primary" href="<spring:url value="/piloter/piloter?avion_matricule=${piloter.avion.matricule}&pilote_matricule=${piloter.pilote.matricule}" />">
                             <i class="fa fa-book-reader"></i>
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-outline-danger" href="<spring:url value="/piloter/delete/${piloter.id}" />">
+                        <a class="btn btn-outline-danger" href="<spring:url value="/piloter/delete?avion_matricule=${piloter.avion.matricule}&pilote_matricule=${piloter.pilote.matricule}" />">
                             <i class="fa fa-trash-can"></i>
                         </a>
                     </td>

@@ -1,21 +1,15 @@
 package com.inf25207.tp3.repositories;
 
-import com.inf25207.tp3.domain.models.Pilote;
 import com.inf25207.tp3.domain.models.Piloter;
-import com.inf25207.tp3.repositories.interfaces.IModelRepository;
 import com.inf25207.tp3.repositories.interfaces.IUniqueRelationRepository;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 
 @Repository(value = "piloterRepo")
 public class PiloterRepository extends ModelRepository<Piloter> implements IUniqueRelationRepository<Piloter> {
-    @Autowired
-    private IModelRepository<Pilote> piloteRepo;
-
     @Override
     public List<Piloter> getAll() {
         Session session = sessionfactory.openSession();
@@ -36,23 +30,35 @@ public class PiloterRepository extends ModelRepository<Piloter> implements IUniq
 
     @Override
     public boolean persist(Piloter model) {
-        Piloter experienceExistante = this.relationAlreadyExists(model);
-        if (experienceExistante == null)
+        Piloter piloter = get(model.getPilote().getMatricule(), model.getAvion().getMatricule());
+        if (piloter == null)
             return super.persist(model);
-
-        model.setId(experienceExistante.getId());
-        return true;
+        else {
+            return false;
+        }
     }
 
     @Override
-    public Piloter relationAlreadyExists(Piloter experience) {
-        int piloteId = experience.getPilote().getMatricule();
-        Pilote pilote = piloteRepo.getWithRelations(piloteId);
+    public Piloter get(int leftId, int rightId) {
+        Session session = sessionfactory.openSession();
+        Query<Piloter> query = session.createQuery("from Piloter s where s.pilote.matricule=:pilote_matricule and s.avion.matricule=:avion_matricule", Piloter.class);
+        query.setParameter("pilote_matricule", leftId);
+        query.setParameter("avion_matricule", rightId);
+        Piloter piloter = query.uniqueResult();
 
-        return pilote.getExperiences()
-                .stream()
-                .filter(e -> Objects.equals(e.getAvion().getMatricule(), experience.getAvion().getMatricule()))
-                .findFirst()
-                .orElse(null);
+        session.close();
+        return piloter;
+    }
+
+    @Override
+    public void delete(int leftId, int rightId) {
+        Session session = sessionfactory.openSession();
+
+        session.beginTransaction();
+        session.remove(get(leftId, rightId));
+        session.flush();
+        session.getTransaction().commit();
+
+        session.close();
     }
 }

@@ -1,10 +1,9 @@
 package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.editors.interfaces.IModelPropertyEditor;
-import com.inf25207.tp3.domain.models.Avion;
-import com.inf25207.tp3.domain.models.Pilote;
-import com.inf25207.tp3.domain.models.Piloter;
+import com.inf25207.tp3.domain.models.*;
 import com.inf25207.tp3.services.interfaces.IModelService;
+import com.inf25207.tp3.services.interfaces.IUniqueRelationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,9 +53,10 @@ public class PiloterController {
         return "piloter/listePiloter";
     }
 
-    @GetMapping("/piloter/{id}")
-    public String viewPiloter(@PathVariable(value = "id") int id, Model model) {
-        Piloter piloter = piloterService.getWithRelations(id);
+    @GetMapping("/piloter")
+    public String viewPiloter(@RequestParam(value = "avion_matricule") int avionMatricule, @RequestParam(value = "pilote_matricule") int piloteMatricule, Model model) {
+        Piloter piloter = ((IUniqueRelationService<Piloter>)piloterService).get(piloteMatricule, avionMatricule);
+
         model.addAttribute("piloter", piloter);
         return "piloter/piloter";
     }
@@ -77,23 +77,32 @@ public class PiloterController {
 
     @PostMapping("/save")
     public String savePiloter(@Valid @ModelAttribute("piloter") Piloter piloter, BindingResult result, ModelMap model) {
-        if (result.hasErrors()) {
-            Collection<Avion> avions = avionService.getAll();
-            model.addAttribute("avions", avions);
+        if (!result.hasErrors()) {
+            if (piloterService.persist(piloter)) {
+                return "redirect:/piloter/piloter?avion_matricule=" + piloter.getAvion().getMatricule() + "&pilote_matricule=" + piloter.getPilote().getMatricule();
+            }
 
-            Collection<Pilote> pilotes = piloteService.getAll();
-            model.addAttribute("pilotes", pilotes);
-
-            return "piloter/addPiloter";
+            result.rejectValue("avion", "error.avion", "Cette relation existe déjà.");
         }
 
-        piloterService.persist(piloter);
-        return "redirect:/piloter/piloter/" + piloter.getId();
+        Collection<Avion> avions = avionService.getAll();
+        model.addAttribute("avions", avions);
+
+        Collection<Pilote> pilotes = piloteService.getAll();
+        model.addAttribute("pilotes", pilotes);
+
+        return "piloter/addPiloter";
     }
 
     @GetMapping("/delete/{id}")
     public String deletePiloter(@PathVariable (value = "id") int id) {
         piloterService.delete(id);
+        return "redirect:/piloter/listePiloter";
+    }
+
+    @GetMapping("/delete")
+    public String deleteSpecialisation(@RequestParam(value = "avion_matricule") int avionMatricule, @RequestParam(value = "pilote_matricule") int piloteMatricule) {
+        ((IUniqueRelationService<Piloter>)piloterService).delete(piloteMatricule, avionMatricule);
         return "redirect:/piloter/listePiloter";
     }
 }

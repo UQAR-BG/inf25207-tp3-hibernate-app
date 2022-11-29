@@ -1,21 +1,15 @@
 package com.inf25207.tp3.repositories;
 
-import com.inf25207.tp3.domain.models.Pilote;
 import com.inf25207.tp3.domain.models.Qualification;
-import com.inf25207.tp3.repositories.interfaces.IModelRepository;
 import com.inf25207.tp3.repositories.interfaces.IUniqueRelationRepository;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 
 @Repository(value = "qualificationRepo")
 public class QualificationRepository extends ModelRepository<Qualification> implements IUniqueRelationRepository<Qualification> {
-    @Autowired
-    private IModelRepository<Pilote> piloteRepo;
-
     @Override
     public List<Qualification> getAll() {
         Session session = sessionfactory.openSession();
@@ -36,23 +30,35 @@ public class QualificationRepository extends ModelRepository<Qualification> impl
 
     @Override
     public boolean persist(Qualification model) {
-        Qualification qualifExistante = this.relationAlreadyExists(model);
-        if (qualifExistante == null)
+        Qualification qualification = get(model.getPilote().getMatricule(), model.getType().getId());
+        if (qualification == null)
             return super.persist(model);
-
-        model.setId(qualifExistante.getId());
-        return true;
+        else {
+            return false;
+        }
     }
 
     @Override
-    public Qualification relationAlreadyExists(Qualification qualification) {
-        int piloteId = qualification.getPilote().getMatricule();
-        Pilote pilote = piloteRepo.getWithRelations(piloteId);
+    public Qualification get(int leftId, int rightId) {
+        Session session = sessionfactory.openSession();
+        Query<Qualification> query = session.createQuery("from Qualification s where s.pilote.matricule=:matricule and s.type.id=:id", Qualification.class);
+        query.setParameter("matricule", leftId);
+        query.setParameter("id", rightId);
+        Qualification qualification = query.uniqueResult();
 
-        return pilote.getQualifications()
-                .stream()
-                .filter(q -> Objects.equals(q.getType().getId(), qualification.getType().getId()))
-                .findFirst()
-                .orElse(null);
+        session.close();
+        return qualification;
+    }
+
+    @Override
+    public void delete(int leftId, int rightId) {
+        Session session = sessionfactory.openSession();
+
+        session.beginTransaction();
+        session.remove(get(leftId, rightId));
+        session.flush();
+        session.getTransaction().commit();
+
+        session.close();
     }
 }
