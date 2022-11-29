@@ -50,6 +50,7 @@ public class EmployeController {
     public String viewEmploye(@PathVariable(value = "id") int id, Model model) {
         Employe employe = employeService.getWithRelations(id);
         model.addAttribute("employe", employe);
+        model.addAttribute("isUpdating", false);
         return "employe/employe";
     }
 
@@ -73,6 +74,32 @@ public class EmployeController {
             return "employe/addEmploye";
         }
         employeService.persist(employe);
+        return "redirect:/employe/employe/" + employe.getMatricule();
+    }
+
+    @GetMapping("/update/{id}")
+    public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
+        Employe employe = employeService.getWithRelations(id);
+        model.addAttribute("employe", employe);
+        model.addAttribute("isUpdating", true);
+
+        Collection<Adresse> adresses = adresseService.getAll();
+        model.addAttribute("adresses", adresses);
+
+        return "employe/employe";
+    }
+
+    @PostMapping("/save/{id}")
+    public String updateEmploye(@PathVariable( value = "id") int id, @Valid @ModelAttribute("employe") Employe employe, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("isUpdating", true);
+            return "employe/employe";
+        }
+
+        employe.setMatricule(id);
+        employe = employeService.update(employe);
+
+        model.addAttribute("isUpdating", false);
         return "redirect:/employe/employe/" + employe.getMatricule();
     }
 

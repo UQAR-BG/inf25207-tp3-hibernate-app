@@ -67,7 +67,10 @@ public class AdresseController {
             model.addAttribute("isUpdating", true);
             return "adresse/adresse";
         }
+
+        adresse.setId(id);
         adresse = adresseService.update(adresse);
+
         model.addAttribute("isUpdating", false);
         return "redirect:/adresse/adresse/" + adresse.getId();
     }
