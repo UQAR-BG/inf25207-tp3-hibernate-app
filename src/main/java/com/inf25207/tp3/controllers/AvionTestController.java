@@ -1,9 +1,7 @@
 package com.inf25207.tp3.controllers;
 
 import com.inf25207.tp3.domain.editors.interfaces.IModelPropertyEditor;
-import com.inf25207.tp3.domain.models.Avion;
-import com.inf25207.tp3.domain.models.AvionTest;
-import com.inf25207.tp3.domain.models.Test;
+import com.inf25207.tp3.domain.models.*;
 import com.inf25207.tp3.services.interfaces.IModelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +85,35 @@ public class AvionTestController {
             return "avionTest/addAvionTest";
         }
         avionTestService.persist(avionTest);
+        return "redirect:/avionTest/avionTest/" + avionTest.getId();
+    }
+
+    @GetMapping("/update/{id}")
+    public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
+        AvionTest avionTest = avionTestService.getWithRelations(id);
+        model.addAttribute("avionTest", avionTest);
+        model.addAttribute("isUpdating", true);
+
+        Collection<Avion> avions = avionService.getAll();
+        model.addAttribute("avions", avions);
+
+        Collection<Test> tests = testService.getAll();
+        model.addAttribute("tests", tests);
+
+        return "avionTest/avionTest";
+    }
+
+    @PostMapping("/save/{id}")
+    public String updateAvionTest(@PathVariable( value = "id") int id, @Valid @ModelAttribute("avionTest") AvionTest avionTest, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("isUpdating", true);
+            return "avionTest/avionTest";
+        }
+
+        avionTest.setId(id);
+        avionTest = avionTestService.update(avionTest);
+
+        model.addAttribute("isUpdating", false);
         return "redirect:/avionTest/avionTest/" + avionTest.getId();
     }
 
