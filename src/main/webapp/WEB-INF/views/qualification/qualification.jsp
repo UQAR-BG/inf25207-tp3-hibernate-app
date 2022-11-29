@@ -25,7 +25,7 @@
                             </a>
                         </dd>
 
-                        <dt class="col-sm-6 col-lg-4">Technicien : </dt>
+                        <dt class="col-sm-6 col-lg-4">Pilote : </dt>
                         <dd class="col-sm-6 col-lg-8">
                             <a href="<spring:url value="/pilote/pilote/${pilote.matricule}" />">
                                 ${pilote}

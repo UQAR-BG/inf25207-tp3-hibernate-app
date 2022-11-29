@@ -3,11 +3,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="pilote" value="${pilote}" scope="request"/>
-<c:set var="employe" value="${pilote.employe}" scope="request"/>
-<c:set var="examinations" value="${examinations}" scope="request"/>
-<c:set var="experiences" value="${experiences}" scope="request"/>
-<c:set var="qualifications" value="${qualifications}" scope="request"/>
+<c:set var="piloter" value="${piloter}" scope="request"/>
+<c:set var="avion" value="${piloter.avion}" scope="request"/>
+<c:set var="pilote" value="${piloter.pilote}" scope="request"/>
 
 <html lang="en">
     <jsp:include page="../shared/_head.jsp"/>
@@ -15,46 +13,28 @@
         <jsp:include page="../shared/_navbar.jsp"/>
         <div class="container">
             <div class="row mt-4">
-                <h2>Pilote #${pilote.matricule}</h2>
+                <h2>Expérience de vol #${piloter.id}</h2>
             </div>
             <div class="row mt-4">
                 <div class="container-fluid">
                     <dl class="row mt-4">
-                        <dt class="col-sm-6 col-lg-4">Employé : </dt>
+                        <dt class="col-sm-6 col-lg-4">Avion : </dt>
                         <dd class="col-sm-6 col-lg-8">
-                            <a href="<spring:url value="/employe/employe/${employe.matricule}" />">
-                                ${employe}
+                            <a href="<spring:url value="/avion/avion/${avion.matricule}" />">
+                                ${avion}
                             </a>
                         </dd>
 
-                        <dt class="col-sm-6 col-lg-4">Adresse : </dt>
+                        <dt class="col-sm-6 col-lg-4">Pilote : </dt>
                         <dd class="col-sm-6 col-lg-8">
-                            <a href="<spring:url value="/adresse/adresse/${employe.adresse.id}" />">
-                                ${employe.adresse}
+                            <a href="<spring:url value="/pilote/pilote/${pilote.matricule}" />">
+                                ${pilote}
                             </a>
                         </dd>
                     </dl>
                 </div>
             </div>
-            <c:choose>
-                <c:when test="${examinations != null && !examinations.isEmpty()}">
-                    <div class="row mt-4">
-                        <hr/>
-                        <h4>Examinations associées avec ce pilote:</h4>
-                        <jsp:include page="../examination/_examinationList.jsp"/>
-                    </div>
-                </c:when>
-            </c:choose>
-            <c:choose>
-                <c:when test="${experiences != null && !experiences.isEmpty()}">
-                    <div class="row mt-4">
-                        <hr/>
-                        <h4>Expériences de vol associées avec ce pilote:</h4>
-                        <jsp:include page="../piloter/_piloterList.jsp"/>
-                    </div>
-                </c:when>
-            </c:choose>
-            <a href="<spring:url value="/examen/examens" />">
+            <a href="<spring:url value="/piloter/listePiloter" />">
                 <i class="fa fa-arrow-left"></i><span class="mx-2">Retour à la liste</span>
             </a>
         </div>

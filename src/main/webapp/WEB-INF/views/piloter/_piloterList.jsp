@@ -2,41 +2,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:choose>
-    <c:when test="${pilotes != null || !pilotes.isEmpty()}">
+    <c:when test="${listePiloter != null || !listePiloter.isEmpty()}">
         <table class="table">
             <colgroup>
                 <col class="col-md-1" />
-                <col class="col-md-2" />
-                <col class="col-md-7" />
+                <col class="col-md-4" />
+                <col class="col-md-3" />
                 <col class="col-md-1" />
                 <col class="col-md-1" />
             </colgroup>
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Matricule du pilote</th>
-                <th scope="col">Employé</th>
+                <th scope="col">Avion</th>
+                <th scope="col">Pilote</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${pilotes}" var="pilote" varStatus="loop">
+            <c:forEach items="${listePiloter}" var="piloter" varStatus="loop">
                 <tr>
                     <th scope="row">${loop.index + 1}</th>
-                    <td>${pilote.matricule}</td>
                     <td>
-                        <a href="<spring:url value="/empoye/empoye/${pilote.employe.matricule}" />">
-                                ${pilote.employe}
+                        <a href="<spring:url value="/type/type/${piloter.avion.matricule}" />">
+                                ${piloter.avion}
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-outline-primary" href="<spring:url value="/pilote/pilote/${pilote.matricule}" />">
+                        <a href="<spring:url value="/pilote/pilote/${piloter.pilote.matricule}" />">
+                                ${piloter.pilote}
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary" href="<spring:url value="/piloter/piloter/${piloter.id}" />">
                             <i class="fa fa-book-reader"></i>
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-outline-danger" href="<spring:url value="/pilote/delete/${pilote.matricule}" />">
+                        <a class="btn btn-outline-danger" href="<spring:url value="/piloter/delete/${piloter.id}" />">
                             <i class="fa fa-trash-can"></i>
                         </a>
                     </td>
