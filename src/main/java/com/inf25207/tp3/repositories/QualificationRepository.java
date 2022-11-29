@@ -3,6 +3,7 @@ package com.inf25207.tp3.repositories;
 import com.inf25207.tp3.domain.models.Pilote;
 import com.inf25207.tp3.domain.models.Qualification;
 import com.inf25207.tp3.repositories.interfaces.IModelRepository;
+import com.inf25207.tp3.repositories.interfaces.IUniqueRelationRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Repository(value = "qualificationRepo")
-public class QualificationRepository extends ModelRepository<Qualification> {
+public class QualificationRepository extends ModelRepository<Qualification> implements IUniqueRelationRepository<Qualification> {
     @Autowired
     private IModelRepository<Pilote> piloteRepo;
 
@@ -35,9 +36,7 @@ public class QualificationRepository extends ModelRepository<Qualification> {
 
     @Override
     public boolean persist(Qualification model) {
-        Integer piloteId = model.getPilote().getMatricule();
-
-        Qualification qualifExistante = this.existeDeja(model, piloteId);
+        Qualification qualifExistante = this.relationAlreadyExists(model);
         if (qualifExistante == null)
             return super.persist(model);
 
@@ -45,7 +44,9 @@ public class QualificationRepository extends ModelRepository<Qualification> {
         return true;
     }
 
-    private Qualification existeDeja(Qualification qualification, Integer piloteId) {
+    @Override
+    public Qualification relationAlreadyExists(Qualification qualification) {
+        int piloteId = qualification.getPilote().getMatricule();
         Pilote pilote = piloteRepo.getWithRelations(piloteId);
 
         return pilote.getQualifications()
