@@ -33,6 +33,7 @@ public class AdresseController {
     public String viewAdresse(@PathVariable(value = "id") int id, Model model) {
         Adresse adresse = adresseService.getWithRelations(id);
         model.addAttribute("adresse", adresse);
+        model.addAttribute("isUpdating", false);
         return "adresse/adresse";
     }
  
@@ -49,6 +50,25 @@ public class AdresseController {
             return "adresse/addAdresse";
         }
         adresseService.persist(adresse);
+        return "redirect:/adresse/adresse/" + adresse.getId();
+    }
+
+    @GetMapping("/update/{id}")
+    public String showFormForUpdate(@PathVariable( value = "id") int id, Model model) {
+        Adresse adresse = adresseService.getWithRelations(id);
+        model.addAttribute("adresse", adresse);
+        model.addAttribute("isUpdating", true);
+        return "adresse/adresse";
+    }
+
+    @PostMapping("/save/{id}")
+    public String updateAdresse(@PathVariable( value = "id") int id, @Valid @ModelAttribute("adresse") Adresse adresse, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("isUpdating", true);
+            return "adresse/adresse";
+        }
+        adresse = adresseService.update(adresse);
+        model.addAttribute("isUpdating", false);
         return "redirect:/adresse/adresse/" + adresse.getId();
     }
  
