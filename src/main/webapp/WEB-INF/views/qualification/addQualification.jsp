@@ -4,6 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="types" value="${types}" scope="request"/>
+<c:set var="pilotes" value="${pilotes}" scope="request"/>
+
 <html lang="en">
     <jsp:include page="../shared/_head.jsp"/>
     <body>
@@ -12,43 +15,29 @@
             <div class="row mt-4">
                 <div class="col-3"></div>
                 <div class="col-6">
-                    <h2>Ajouter une adresse</h2>
-                    <form:form class="form my-4" method="POST" action="/adresse/save" modelAttribute="adresse">
+                    <h2>Ajouter une spécialisation</h2>
+                    <form:form class="form my-4" method="POST" action="/qualification/save" modelAttribute="qualification">
                         <div class="form-group mt-3">
-                            <form:label path="numeroRue">Code civique</form:label>
-                            <form:input type="number" class="form-control" id="inputNumeroRue" path="numeroRue" cssErrorClass="form-control is-invalid" min="1" max="999"/>
-                            <form:errors path="numeroRue" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
+                            <form:label path="type">Type</form:label>
+                            <form:select class="form-select" id="inputType" path="type" cssErrorClass="form-control is-invalid">
+                                <form:option value="-1" label="Sélectionnez un type ..."/>
+                                <form:options items="${types}" itemValue="id" />
+                            </form:select>
+                            <form:errors path="type" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
                         </div>
                         <div class="form-group mt-3">
-                            <form:label path="nomRue">Nom de rue</form:label>
-                            <form:input type="text" class="form-control" id="inputNomRue" path="nomRue" cssErrorClass="form-control is-invalid"/>
-                            <form:errors path="nomRue" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
-                        </div>
-                        <div class="form-group mt-3">
-                            <form:label path="ville">Ville</form:label>
-                            <form:input type="text" class="form-control" id="inputVille" path="ville" cssErrorClass="form-control is-invalid"/>
-                            <form:errors path="ville" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
-                        </div>
-                        <div class="form-group mt-3">
-                            <form:label path="province">Province</form:label>
-                            <form:input type="text" class="form-control" id="inputProvince" path="province" cssErrorClass="form-control is-invalid"/>
-                            <form:errors path="province" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
-                        </div>
-                        <div class="form-group mt-3">
-                            <form:label path="pays">Pays</form:label>
-                            <form:input type="text" class="form-control" id="inputPays" path="pays" cssErrorClass="form-control is-invalid"/>
-                            <form:errors path="pays" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
-                        </div>
-                        <div class="form-group mt-3">
-                            <form:label path="codePostal">Code postal</form:label>
-                            <form:input type="text" class="form-control" id="inputCodePostal" path="codePostal" cssErrorClass="form-control is-invalid"/>
-                            <form:errors path="codePostal" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
+                            <form:label path="pilote">Pilote</form:label>
+                            <form:select class="form-select" id="inputPilote" path="pilote" cssErrorClass="form-control is-invalid">
+                                <form:option value="-1" label="Sélectionnez un pilote ..."/>
+                                <form:options items="${pilotes}" itemValue="matricule" />
+                            </form:select>
+                            <form:errors path="pilote" cssClass="error" cssStyle="color: #ff0000; font-size: small;"/>
                         </div>
                         <div class="form-group mt-3">
                             <button type="submit" class="btn btn-primary mb-2">Ajouter</button>
                         </div>
                     </form:form>
-                    <a href="<spring:url value="/adresse/adresses" />">
+                    <a href="<spring:url value="/qualification/qualifications" />">
                         <i class="fa fa-arrow-left"></i><span class="mx-2">Retour à la liste</span>
                     </a>
                 </div>
