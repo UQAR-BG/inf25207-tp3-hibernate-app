@@ -8,6 +8,10 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Entity
 @Table(name = "Technicien")
 public class Technicien {

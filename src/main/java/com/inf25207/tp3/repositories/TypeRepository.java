@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Repository(value = "typeRepo")
 public class TypeRepository extends ModelRepository<Type> {
     @Override

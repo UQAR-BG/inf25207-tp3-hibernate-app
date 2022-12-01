@@ -8,6 +8,10 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Entity
 @Table(
     name = "Type",

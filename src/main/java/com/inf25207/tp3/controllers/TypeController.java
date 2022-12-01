@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Controller
 @RequestMapping("/type")
 public class TypeController {

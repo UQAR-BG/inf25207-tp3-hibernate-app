@@ -7,6 +7,10 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
         HibernateJpaAutoConfiguration.class

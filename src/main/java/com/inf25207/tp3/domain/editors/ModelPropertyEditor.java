@@ -5,8 +5,9 @@ import com.inf25207.tp3.services.interfaces.IModelService;
 
 import java.beans.PropertyEditorSupport;
 
-/*
- * Auteur: Jerome Dalbert
+/**
+ * @author de référence Jerome Dalbert
+ * @author Bastien Goulet
  * Source: https://stackoverflow.com/questions/12875299/spring-mvc-formselect-tag
  */
 

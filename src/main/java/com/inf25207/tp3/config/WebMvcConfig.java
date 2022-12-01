@@ -10,7 +10,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 /**
- * @author Ramesh Fadatare
+ * @author de référence Ramesh Fadatare
+ * @author Bastien Goulet
  * Source: https://www.javaguides.net/2018/11/spring-5-hibernate-5-java-config-example.html
  */
 

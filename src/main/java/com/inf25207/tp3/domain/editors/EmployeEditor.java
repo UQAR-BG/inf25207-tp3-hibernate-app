@@ -5,6 +5,9 @@ import com.inf25207.tp3.services.interfaces.IModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Bastien Goulet
+ * */
 @Component(value = "employeEditor")
 public class EmployeEditor extends ModelPropertyEditor<Employe> {
     @Autowired

@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Repository(value = "avionTestRepo")
 public class AvionTestRepository extends ModelRepository<AvionTest> {
     @Override

@@ -6,6 +6,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Repository
 public abstract class ModelRepository<T> implements IModelRepository<T> {
     @Autowired

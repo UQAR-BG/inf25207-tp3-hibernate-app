@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Controller
 @RequestMapping("/specialisation")
 public class SpecialisationController {

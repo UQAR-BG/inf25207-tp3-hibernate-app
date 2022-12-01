@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Repository(value = "qualificationRepo")
 public class QualificationRepository extends ModelRepository<Qualification> implements IUniqueRelationRepository<Qualification> {
     @Override

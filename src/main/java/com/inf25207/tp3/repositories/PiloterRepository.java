@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Repository(value = "piloterRepo")
 public class PiloterRepository extends ModelRepository<Piloter> implements IUniqueRelationRepository<Piloter> {
     @Override

@@ -17,9 +17,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Entity
 @Table(name = "Employe")
-public class Employe {
+public class
+Employe {
     @Id
     @GeneratedValue
     private Integer matricule;

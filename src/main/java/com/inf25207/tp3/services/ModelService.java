@@ -7,6 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Service
 public abstract class ModelService<T> implements IModelService<T> {
     protected IModelRepository<T> repository;

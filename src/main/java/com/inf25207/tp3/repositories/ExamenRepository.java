@@ -1,12 +1,15 @@
 package com.inf25207.tp3.repositories;
 
-import com.inf25207.tp3.domain.models.Employe;
 import com.inf25207.tp3.domain.models.Examen;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+/**
+ * @author Bastien Goulet
+ * */
 
 @Repository(value = "examenRepo")
 public class ExamenRepository extends ModelRepository<Examen> {

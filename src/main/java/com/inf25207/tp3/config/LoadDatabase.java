@@ -11,6 +11,10 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+* @author Bastien Goulet
+* */
+
 @Configuration
 class LoadDatabase {
 

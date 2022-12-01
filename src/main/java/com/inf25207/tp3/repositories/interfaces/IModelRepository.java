@@ -2,6 +2,10 @@ package com.inf25207.tp3.repositories.interfaces;
 
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 public interface IModelRepository<T> {
     List<T> getAll();
     boolean persist(T model);

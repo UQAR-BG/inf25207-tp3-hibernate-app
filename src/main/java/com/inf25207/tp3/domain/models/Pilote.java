@@ -8,6 +8,10 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Entity
 @Table(name = "Pilote", indexes = { @Index(columnList = "matricule") })
 public class Pilote {

@@ -8,8 +8,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/*
- * Auteur: Ashish Agre (silentsudo)
+/**
+ * @author de référence Ashish Agre (silentsudo)
+ * @author Bastien Goulet
  * Source: https://gist.github.com/silentsudo/26aa39eaf7c5a0235e89469d809ab9d3
  */
 

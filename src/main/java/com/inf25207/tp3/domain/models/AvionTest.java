@@ -10,6 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Entity
 @Table(name = "AvionTest")
 public class AvionTest {

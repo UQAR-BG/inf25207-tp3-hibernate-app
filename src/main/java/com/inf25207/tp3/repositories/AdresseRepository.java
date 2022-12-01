@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Repository(value = "adresseRepo")
 public class AdresseRepository extends ModelRepository<Adresse> {
     @Override

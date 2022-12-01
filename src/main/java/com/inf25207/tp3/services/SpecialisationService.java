@@ -7,6 +7,10 @@ import com.inf25207.tp3.services.interfaces.IUniqueRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Service(value = "specialisationService")
 public class SpecialisationService extends ModelService<Specialisation> implements IUniqueRelationService<Specialisation> {
     @Autowired

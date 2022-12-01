@@ -7,6 +7,10 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 
+/**
+ * @author Bastien Goulet
+ * */
+
 @Entity
 @Table(name = "Qualification")
 public class Qualification implements Serializable {

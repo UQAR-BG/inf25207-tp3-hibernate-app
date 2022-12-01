@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-/*
-* Auteur: baeldung
-* Source: https://www.baeldung.com/java-date-to-localdate-and-localdatetime
+/**
+ * @author de référence baeldung
+ * @author Bastien Goulet
+ * Source: https://www.baeldung.com/java-date-to-localdate-and-localdatetime
 * */
 
 public class DateUtils {
